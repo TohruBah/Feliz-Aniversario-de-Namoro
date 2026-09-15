@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Alexandre 
+        ❤️ Maria</title>
+
+    <link rel="stylesheet" href="CSS.css">
+    
+</head>
+
+<body>
+
+    <!-- Player invisível do YouTube -->
+    <div id="youtubePlayer" aria-hidden="true"></div>
+
+    <!-- Botão de música -->
+    <button id="botaoMusica" class="botao-musica pausado" type="button" onclick="alternarMusica()">
+        <span id="iconeMusica">🔇</span>
+        <span id="textoMusica">Música</span>
+    </button>
+
+    <!-- resto do site -->
+
+
+    <!-- Fundo com partículas -->
+    <div class="particulas"></div>
+
+    <!-- INÍCIO -->
+    <section class="inicio">
+
+        <div class="hero">
+
+            <div class="simbolo">✦</div>
+
+            <p class="mini-titulo">
+                UMA HISTÓRIA ESPECIAL
+            </p>
+
+            <h1>
+                Alexandre
+                <span>❤️</span>
+                Maria
+            </h1>
+
+            <p class="subtitulo">
+                8 meses de amor, aventuras,<br>
+                risadas e memórias inesquecíveis.
+            </p>
+
+            <button onclick="abrirSite()">
+                Nossa história ✨
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTEÚDO -->
+    <main id="conteudo">
+
+        <!-- HISTÓRIA -->
+        <section class="secao historia">
+
+            <p class="categoria">
+                NOSSA HISTÓRIA
+            </p>
+
+            <h2>
+                O começo de uma aventura ❤️
+            </h2>
+
+            <div class="texto">
+
+                <p>
+                    Existem encontros que parecem acontecer por acaso,
+                    mas acabam se tornando as partes mais importantes
+                    das nossas vidas.
+                </p>
+
+                <p>
+                    E foi assim que começou a nossa história.
+                    Alexandre e Maria, duas pessoas que encontraram
+                    uma na outra alguém para compartilhar momentos,
+                    sonhos, risadas e aventuras.
+                </p>
+
+                <p>
+                    Hoje comemoramos <strong>8 meses juntos</strong>.
+                    Oito meses de uma história que ainda está apenas
+                    começando.
+                </p>
+
+                <p class="frase">
+                    "Que nossa aventura nunca tenha um fim." ✨
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTADOR -->
+        <section class="secao contador-section">
+
+            <p class="categoria">
+                NOSSO TEMPO
+            </p>
+
+            <h2>
+                Juntos há...
+            </h2>
+
+            <div class="contador">
+
+                <div class="tempo">
+                    <strong id="dias">0</strong>
+                    <span>DIAS</span>
+                </div>
+
+                <div class="tempo">
+                    <strong id="horas">0</strong>
+                    <span>HORAS</span>
+                </div>
+
+                <div class="tempo">
+                    <strong id="minutos">0</strong>
+                    <span>MINUTOS</span>
+                </div>
+
+                <div class="tempo">
+                    <strong id="segundos">0</strong>
+                    <span>SEGUNDOS</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- UNIVERSOS -->
+<!-- UNIVERSOS -->
+<section class="universos">
+
+    <div class="secao">
+
+        <p class="categoria">
+            NOSSOS UNIVERSOS
+        </p>
+
+        <h2>
+            Casais que amamos ❤️
+        </h2>
+
+        <p class="universos-dica">
+            Clique em cada universo ✨
+        </p>
+
+        <div class="universos-grid">
+
+            <!-- DEMON SLAYER -->
+            <div class="universo demon"
+                 onclick="mostrarCasal(this)">
+
+                <div class="universo-conteudo">
+
+                    <div class="icone">⚔️</div>
+
+                    <h3>Demon Slayer</h3>
+
+                    <p>
+                        Shinobu & Giyu
+                    </p>
+
+                    <span class="ver-casal">
+                        Ver casal ❤️
+                    </span>
+
+                </div>
+
+                <div class="casal">
+
+                    <img
+                        src="imagens/giyu-shinobu.jpg"
+                        alt="Giyu e Shinobu"
+                    >
+
+                    <div class="casal-info">
+
+                        <h4>
+                            Giyu & Shinobu
+                        </h4>
+
+                        <p>
+                            Demon Slayer
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- GENSHIN -->
+            <div class="universo genshin"
+                 onclick="mostrarCasal(this)">
+
+                <div class="universo-conteudo">
+
+                    <div class="icone">✨</div>
+
+                    <h3>Genshin Impact</h3>
+
+                    <p>
+                        Furina & Aether
+                    </p>
+
+                    <span class="ver-casal">
+                        Ver casal ❤️
+                    </span>
+
+                </div>
+
+                <div class="casal">
+
+                    <img
+                        src="imagens/furina-aether.jpg"
+                        alt="Furina e Aether"
+                    >
+
+                    <div class="casal-info">
+
+                        <h4>
+                            Furina & Aether
+                        </h4>
+
+                        <p>
+                            Genshin Impact
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DIÁRIO DE UMA APOTECÁRIA -->
+            <div class="universo apotecaria"
+                 onclick="mostrarCasal(this)">
+
+                <div class="universo-conteudo">
+
+                    <div class="icone">🌿</div>
+
+                    <h3>
+                        Diário de uma Apotecária
+                    </h3>
+
+                    <p>
+                        Jinshi & Maomao
+                    </p>
+
+                    <span class="ver-casal">
+                        Ver casal ❤️
+                    </span>
+
+                </div>
+
+                <div class="casal">
+
+                    <img
+                        src="imagens/jinshi-maomao.jpg"
+                        alt="Jinshi e Maomao"
+                    >
+
+                    <div class="casal-info">
+
+                        <h4>
+                            Jinshi & Maomao
+                        </h4>
+
+                        <p>
+                            Diário de uma Apotecária
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+        <!-- 8 MOTIVOS -->
+        <section class="secao motivos">
+
+            <p class="categoria">
+                8 MESES
+            </p>
+
+            <h2>
+                8 motivos para amar você 💗
+            </h2>
+
+            <div class="motivos-grid">
+
+                <div class="motivo">
+                    <span>01</span>
+                    <p>Seu sorriso consegue melhorar qualquer dia.</p>
+                </div>
+
+                <div class="motivo">
+                    <span>02</span>
+                    <p>Você torna os momentos simples em momentos especiais.</p>
+                </div>
+
+                <div class="motivo">
+                    <span>03</span>
+                    <p>Posso compartilhar minhas paixões com você.</p>
+                </div>
+
+                <div class="motivo">
+                    <span>04</span>
+                    <p>Você está presente nos momentos bons e ruins.</p>
+                </div>
+
+                <div class="motivo">
+                    <span>05</span>
+                    <p>Com você, sempre existe uma nova aventura.</p>
+                </div>
+
+                <div class="motivo">
+                    <span>06</span>
+                    <p>Você me faz rir até quando eu não esperava.</p>
+                </div>
+
+                <div class="motivo">
+                    <span>07</span>
+                    <p>Nossa história é uma das coisas mais especiais para mim.</p>
+                </div>
+
+                <div class="motivo">
+                    <span>08</span>
+                    <p>Porque simplesmente amo você. ❤️</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- GALERIA -->
+        <section class="secao galeria-section">
+
+            <p class="categoria">
+                NOSSAS MEMÓRIAS
+            </p>
+
+            <h2>
+                Momentos que quero guardar 📸
+            </h2>
+
+            <div class="galeria">
+
+                <div class="foto">
+                    <img src="imagens/foto1.jpg" alt="Alexandre e Gabriela">
+                    <p>Nosso primeiro momento ❤️</p>
+                </div>
+
+                <div class="foto">
+                    <img src="imagens/foto2.jpg" alt="Alexandre e Gabriela">
+                    <p>Uma memória inesquecível.</p>
+                </div>
+
+                <div class="foto">
+                    <img src="imagens/foto3.jpg" alt="Alexandre e Gabriela">
+                    <p>Mais um capítulo da nossa história.</p>
+                </div>
+
+                <div class="foto">
+                    <img src="imagens/foto4.jpg" alt="Alexandre e Gabriela">
+                    <p>E que venham muitos outros.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CARTA -->
+        <section class="carta-section">
+
+            <div class="carta">
+
+                <div class="carta-decoracao">
+                    ✦
+                </div>
+
+                <p class="categoria">
+                    PARA VOCÊ
+                </p>
+
+                <h2>
+                    Minha querida Gabriela 💌
+                </h2>
+
+                <p>
+                    Hoje completamos 8 meses juntos.
+                </p>
+
+                <p>
+                    Talvez oito meses pareçam pouco quando comparados
+                    a uma vida inteira, mas para mim foram suficientes
+                    para perceber o quanto você se tornou importante.
+                </p>
+
+                <p>
+                    Cada conversa, cada risada, cada brincadeira,
+                    cada partida e cada momento ao seu lado fazem
+                    parte de uma história que eu quero continuar vivendo.
+                </p>
+
+                <p>
+                    Quero continuar descobrindo novos mundos com você,
+                    seja explorando Teyvat, assistindo nossos animes
+                    favoritos ou simplesmente passando um tempo juntos.
+                </p>
+
+                <p>
+                    Obrigado por fazer parte da minha vida e por tornar
+                    esses últimos meses tão especiais.
+                </p>
+
+                <p class="assinatura">
+                    Com todo meu amor,<br>
+                    Alexandre ❤️
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- FINAL -->
+        <section class="final">
+
+            <div class="estrela">
+                ✦
+            </div>
+
+            <h2>
+                8 meses.
+            </h2>
+
+            <p>
+                Uma história.
+            </p>
+
+            <p>
+                Milhares de memórias.
+            </p>
+
+            <div class="coracao">
+                ❤️
+            </div>
+
+            <h3>
+                E muitos capítulos ainda por escrever.
+            </h3>
+
+            <p class="final-texto">
+                Feliz 8 meses, Gabriela.
+            </p>
+
+            <p class="final-texto">
+                Eu te amo.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="JavaScript.js"></script>
+
+</body>
+
+</html>

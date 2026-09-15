@@ -1,0 +1,1414 @@
+/* ==========================================
+   CONFIGURAÇÕES GERAIS
+========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+
+    background:
+        radial-gradient(circle at 20% 10%, #291c52 0%, transparent 30%),
+        radial-gradient(circle at 80% 40%, #411c45 0%, transparent 30%),
+        #080812;
+
+    color: #ffffff;
+
+    overflow-x: hidden;
+}
+
+
+/* ==========================================
+   FUNDO
+========================================== */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255, 120, 170, 0.12), transparent 35%);
+
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.25;
+
+    background-image:
+        radial-gradient(#ffffff 1px, transparent 1px);
+
+    background-size: 70px 70px;
+
+    z-index: -1;
+}
+
+
+/* ==========================================
+   TELA INICIAL
+========================================== */
+
+.inicio {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 40px 20px;
+
+    position: relative;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(126, 50, 111, 0.35),
+            transparent 45%
+        );
+}
+
+.hero {
+    width: min(900px, 100%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    animation: aparecer 1.5s ease;
+}
+
+.simbolo {
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    font-size: 30px;
+
+    color: #ffd36e;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border: 1px solid rgba(255, 211, 110, 0.3);
+
+    box-shadow:
+        0 0 35px rgba(255, 211, 110, 0.15);
+
+    margin-bottom: 30px;
+
+    animation: brilho 2s infinite;
+}
+
+.mini-titulo,
+.categoria {
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 5px;
+
+    color: #d9a8c2;
+
+    text-transform: uppercase;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+
+    font-size: clamp(55px, 9vw, 105px);
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    margin: 25px 0;
+
+    letter-spacing: -3px;
+}
+
+h1 span {
+    color: #f47fa4;
+
+    display: inline-block;
+
+    margin: 0 8px;
+
+    filter: drop-shadow(0 0 15px rgba(244, 127, 164, 0.4));
+}
+
+.subtitulo {
+    max-width: 600px;
+
+    color: #bdb4c3;
+
+    font-size: 16px;
+
+    line-height: 1.8;
+}
+
+button {
+    margin-top: 40px;
+
+    padding: 16px 35px;
+
+    border-radius: 50px;
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    background:
+        linear-gradient(
+            135deg,
+            #e85c89,
+            #914cbe
+        );
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.35s ease;
+
+    box-shadow:
+        0 10px 35px rgba(200, 80, 150, 0.25);
+}
+
+button:hover {
+    transform: translateY(-5px) scale(1.03);
+
+    box-shadow:
+        0 15px 45px rgba(200, 80, 150, 0.4);
+}
+
+
+/* ==========================================
+   SEÇÕES
+========================================== */
+
+.secao {
+    width: min(1050px, calc(100% - 40px));
+
+    margin: 0 auto;
+
+    padding: 120px 30px;
+
+    text-align: center;
+}
+
+h2 {
+    font-family: 'Playfair Display', serif;
+
+    font-size: clamp(38px, 5vw, 58px);
+
+    font-weight: 500;
+
+    margin: 20px 0 40px;
+}
+
+
+/* ==========================================
+   HISTÓRIA
+========================================== */
+
+.historia {
+    max-width: 900px;
+
+    margin: 40px auto;
+
+    padding: 80px 60px;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.07),
+            rgba(255,255,255,0.025)
+        );
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,0.25);
+
+    backdrop-filter: blur(20px);
+}
+
+.texto {
+    max-width: 680px;
+
+    margin: auto;
+
+    color: #c5bdc7;
+
+    font-size: 16px;
+
+    line-height: 1.9;
+}
+
+.texto p {
+    margin: 22px 0;
+}
+
+.texto strong {
+    color: #f48aaa;
+}
+
+.frase {
+    margin-top: 40px !important;
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 24px;
+
+    font-style: italic;
+
+    color: #f18eac;
+}
+
+
+/* ==========================================
+   CONTADOR
+========================================== */
+
+.contador-section {
+    width: 100%;
+
+    max-width: none;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(78, 45, 130, 0.25),
+            transparent 55%
+        );
+}
+
+.contador {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 18px;
+
+    max-width: 850px;
+
+    margin: 0 auto;
+}
+
+.tempo {
+    width: 155px;
+    height: 155px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.08),
+            rgba(255,255,255,0.025)
+        );
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,0.08),
+        0 20px 50px rgba(0,0,0,0.25);
+
+    transition: 0.35s;
+}
+
+.tempo:hover {
+    transform: translateY(-8px);
+
+    border-color: rgba(239,120,158,0.4);
+
+    box-shadow:
+        0 20px 50px rgba(200,80,150,0.15);
+}
+
+.tempo strong {
+    font-size: 42px;
+
+    color: #f48aaa;
+
+    font-weight: 700;
+}
+
+.tempo span {
+    margin-top: 8px;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color: #928c98;
+}
+
+
+/* ==========================================
+   UNIVERSOS
+========================================== */
+
+.universos {
+    width: 100%;
+
+    padding-bottom: 80px;
+}
+
+.universos .secao {
+    padding-bottom: 80px;
+}
+
+.universos-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 22px;
+
+    max-width: 1000px;
+
+    margin: 0 auto;
+}
+
+.universo {
+    min-height: 300px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 35px 25px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.07),
+            rgba(255,255,255,0.025)
+        );
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(15px);
+
+    transition: 0.4s;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.universo::before {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+
+    filter: blur(50px);
+
+    opacity: 0.15;
+
+    transition: 0.4s;
+}
+
+.universo:hover {
+    transform: translateY(-10px);
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.3);
+}
+
+.universo:hover::before {
+    opacity: 0.3;
+}
+
+.demon::before {
+    background: #e34e6b;
+}
+
+.genshin::before {
+    background: #62a9e8;
+}
+
+.uma::before {
+    background: #e78ac4;
+}
+
+.icone {
+    font-size: 45px;
+
+    margin-bottom: 22px;
+
+    position: relative;
+
+    filter: drop-shadow(0 5px 15px rgba(255,255,255,0.15));
+}
+
+.universo h3 {
+    font-family: 'Playfair Display', serif;
+
+    font-size: 27px;
+
+    margin-bottom: 15px;
+
+    position: relative;
+}
+
+.universo p {
+    max-width: 260px;
+
+    color: #aaa4b0;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    position: relative;
+}
+
+
+/* ==========================================
+   MOTIVOS
+========================================== */
+
+.motivos {
+    max-width: 1000px;
+}
+
+.motivos-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+
+    max-width: 850px;
+
+    margin: auto;
+}
+
+.motivo {
+    min-height: 90px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 22px;
+
+    text-align: left;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,0.04);
+
+    border: 1px solid rgba(255,255,255,0.07);
+
+    transition: 0.3s;
+}
+
+.motivo:hover {
+    transform: translateX(5px);
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border-color: rgba(239,120,158,0.3);
+}
+
+.motivo span {
+    min-width: 35px;
+
+    color: #ef7898;
+
+    font-weight: 700;
+
+    font-size: 13px;
+}
+
+.motivo p {
+    color: #bbb3bd;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   GALERIA
+========================================== */
+
+.galeria-section {
+    max-width: 1100px;
+}
+
+.galeria {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+
+    max-width: 900px;
+
+    margin: 0 auto;
+}
+
+.foto {
+    padding: 10px;
+
+    border-radius: 25px;
+
+    background:
+        rgba(255,255,255,0.05);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(10px);
+
+    overflow: hidden;
+
+    transition: 0.4s;
+}
+
+.foto:hover {
+    transform: translateY(-8px) scale(1.01);
+
+    border-color: rgba(239,120,158,0.35);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.3);
+}
+
+.foto img {
+    display: block;
+
+    width: 100%;
+
+    height: 360px;
+
+    object-fit: cover;
+
+    border-radius: 18px;
+}
+
+.foto p {
+    padding: 18px 10px 12px;
+
+    color: #bdb5be;
+
+    font-size: 13px;
+}
+
+
+/* ==========================================
+   CARTA
+========================================== */
+
+.carta-section {
+    width: 100%;
+
+    padding: 140px 20px;
+
+    display: flex;
+
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(111, 40, 83, 0.35),
+            transparent 55%
+        );
+}
+
+.carta {
+    width: min(750px, 100%);
+
+    padding: 70px 65px;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff8fb,
+            #f4e6ed
+        );
+
+    color: #38212b;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,0.4);
+
+    line-height: 1.9;
+
+    font-size: 16px;
+}
+
+.carta .categoria {
+    color: #a34c67;
+}
+
+.carta h2 {
+    color: #38212b;
+
+    font-size: clamp(35px, 5vw, 48px);
+
+    margin-bottom: 35px;
+}
+
+.carta p {
+    margin: 20px 0;
+}
+
+.carta-decoracao {
+    text-align: center;
+
+    font-size: 30px;
+
+    color: #bd5575;
+
+    margin-bottom: 20px;
+}
+
+.assinatura {
+    margin-top: 40px !important;
+
+    color: #a74363;
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 23px;
+
+    font-style: italic;
+}
+
+
+/* ==========================================
+   FINAL
+========================================== */
+
+.final {
+    min-height: 90vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 60px 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(132,48,94,0.5),
+            transparent 50%
+        );
+}
+
+.final .estrela {
+    margin-bottom: 10px;
+}
+
+.final h2 {
+    font-size: clamp(50px, 8vw, 90px);
+
+    margin-bottom: 10px;
+}
+
+.final p {
+    font-size: 20px;
+
+    color: #c5bac3;
+}
+
+.coracao {
+    font-size: 75px;
+
+    margin: 35px 0;
+
+    filter:
+        drop-shadow(0 0 20px rgba(240,100,150,0.5));
+
+    animation: pulsar 1.5s infinite;
+}
+
+.final h3 {
+    max-width: 600px;
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 25px;
+
+    font-weight: 400;
+
+    color: #e8a5b9;
+}
+
+.final-texto {
+    margin-top: 30px !important;
+
+    color: white !important;
+
+    font-size: 16px !important;
+}
+
+
+/* ==========================================
+   PARTÍCULAS
+========================================== */
+
+.particulas::before,
+.particulas::after {
+    content: "✦   ✧   ·   ✦   ·   ✧";
+
+    position: fixed;
+
+    z-index: 10;
+
+    color: rgba(255,255,255,0.15);
+
+    font-size: 18px;
+
+    pointer-events: none;
+
+    animation: flutuar 15s linear infinite;
+}
+
+.particulas::before {
+    left: 5%;
+}
+
+.particulas::after {
+    right: 5%;
+
+    animation-delay: 5s;
+}
+
+
+/* ==========================================
+   ANIMAÇÕES
+========================================== */
+
+@keyframes aparecer {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes pulsar {
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+    }
+
+}
+
+@keyframes brilho {
+
+    0%, 100% {
+        opacity: 0.6;
+
+        box-shadow:
+            0 0 20px rgba(255,211,110,0.1);
+    }
+
+    50% {
+        opacity: 1;
+
+        box-shadow:
+            0 0 40px rgba(255,211,110,0.25);
+    }
+
+}
+
+@keyframes flutuar {
+
+    from {
+        transform: translateY(100vh);
+    }
+
+    to {
+        transform: translateY(-100vh);
+    }
+
+}
+
+
+/* ==========================================
+   CELULAR
+========================================== */
+
+@media (max-width: 750px) {
+
+    .secao {
+        width: calc(100% - 20px);
+
+        padding: 90px 15px;
+    }
+
+    h1 {
+        letter-spacing: -2px;
+    }
+
+    .historia {
+        padding: 55px 25px;
+
+        border-radius: 22px;
+    }
+
+    .contador {
+        gap: 12px;
+    }
+
+    .tempo {
+        width: 140px;
+
+        height: 140px;
+    }
+
+    .tempo strong {
+        font-size: 36px;
+    }
+
+    .universos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .motivos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .galeria {
+        grid-template-columns: 1fr;
+    }
+
+    .foto img {
+        height: 330px;
+    }
+
+    .carta {
+        padding: 50px 28px;
+
+        border-radius: 22px;
+    }
+
+    .carta h2 {
+        font-size: 35px;
+    }
+
+}
+
+
+/* ==========================================
+   CELULARES PEQUENOS
+========================================== */
+
+@media (max-width: 420px) {
+
+    h1 {
+        font-size: 52px;
+    }
+
+    .subtitulo {
+        font-size: 14px;
+    }
+
+    .tempo {
+        width: 125px;
+
+        height: 125px;
+    }
+
+    .tempo strong {
+        font-size: 32px;
+    }
+
+    .foto img {
+        height: 280px;
+    }
+
+}
+/* ==========================================
+   BOTÃO DE MÚSICA
+========================================== */
+
+.botao-musica {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    z-index: 9999;
+
+    width: auto;
+    min-width: 135px;
+    height: 55px;
+
+    margin: 0;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border-radius: 50px;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(232, 92, 137, 0.75),
+            rgba(145, 76, 190, 0.75)
+        );
+
+    backdrop-filter: blur(15px);
+
+    color: white;
+
+    font-family: 'Inter', sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.35);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+}
+
+
+/* Ícone */
+
+#iconeMusica {
+    font-size: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: transform 0.3s ease;
+}
+
+
+/* Texto */
+
+#textoMusica {
+    white-space: nowrap;
+}
+
+
+/* Quando passar o mouse */
+
+.botao-musica:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 15px 45px rgba(200, 80, 150, 0.35);
+}
+
+
+/* ==========================================
+   MÚSICA TOCANDO
+========================================== */
+
+.botao-musica.tocando {
+
+    box-shadow:
+        0 0 0 1px rgba(255, 130, 170, 0.15),
+        0 0 30px rgba(232, 92, 137, 0.3),
+        0 15px 45px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Animação do ícone */
+
+.botao-musica.tocando #iconeMusica {
+
+    animation:
+        musicaPulando 0.8s ease-in-out infinite;
+}
+
+
+/* ==========================================
+   MÚSICA PAUSADA
+========================================== */
+
+.botao-musica.pausado {
+
+    background:
+        rgba(255, 255, 255, 0.06);
+
+    border-color:
+        rgba(255, 255, 255, 0.1);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.botao-musica.pausado #iconeMusica {
+
+    opacity: 0.7;
+
+    transform: scale(0.9);
+}
+
+
+/* ==========================================
+   ANIMAÇÃO
+========================================== */
+
+@keyframes musicaPulando {
+
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-3px) rotate(-5deg);
+    }
+
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    75% {
+        transform: translateY(-3px) rotate(5deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+}
+
+
+/* ==========================================
+   CELULAR
+========================================== */
+
+@media (max-width: 600px) {
+
+    .botao-musica {
+
+        right: 15px;
+        bottom: 15px;
+
+        min-width: 55px;
+
+        width: 55px;
+        height: 55px;
+
+        padding: 0;
+
+        border-radius: 50%;
+    }
+
+    #textoMusica {
+
+        display: none;
+    }
+
+    #iconeMusica {
+
+        font-size: 21px;
+    }
+
+}
+
+
+/* Player do YouTube: fica fora da área visível, mas permanece carregado */
+#youtubePlayer {
+    position: fixed;
+    left: -9999px;
+    top: -9999px;
+    width: 200px;
+    height: 200px;
+    pointer-events: none;
+}
+
+/* ==========================================
+   CASAIS DOS UNIVERSOS
+========================================== */
+
+.universos-dica {
+    color: #aaa4b0;
+    font-size: 14px;
+    margin-top: -25px;
+    margin-bottom: 35px;
+}
+
+
+/* Card clicável */
+
+.universo {
+    cursor: pointer;
+}
+
+
+/* Conteúdo inicial */
+
+.universo-conteudo {
+    position: relative;
+    z-index: 2;
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+
+/* Texto "ver casal" */
+
+.ver-casal {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding: 8px 16px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(255, 255, 255, 0.07);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
+
+    color: #f48aaa;
+
+    font-size: 12px;
+
+    transition: 0.3s;
+}
+
+
+.universo:hover .ver-casal {
+    background:
+        rgba(244, 138, 170, 0.15);
+
+    transform: scale(1.05);
+}
+
+
+/* ==========================================
+   FOTO DO CASAL
+========================================== */
+
+.casal {
+    display: none;
+
+    width: 100%;
+
+    animation:
+        aparecerCasal 0.5s ease;
+}
+
+
+.casal img {
+    width: 100%;
+    height: 270px;
+
+    object-fit: cover;
+
+    border-radius: 20px;
+
+    display: block;
+}
+
+
+/* Informações abaixo da foto */
+
+.casal-info {
+    padding-top: 20px;
+
+    text-align: center;
+}
+
+
+.casal-info h4 {
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 24px;
+
+    color: white;
+
+    margin-bottom: 6px;
+}
+
+
+.casal-info p {
+    color: #f48aaa;
+
+    font-size: 13px;
+}
+
+
+/* ==========================================
+   CARD ABERTO
+========================================== */
+
+.universo.aberto {
+    padding: 12px;
+
+    transform:
+        translateY(-8px);
+
+    border-color:
+        rgba(244, 138, 170, 0.35);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.4);
+}
+
+
+.universo.aberto .universo-conteudo {
+    display: none;
+}
+
+
+.universo.aberto .casal {
+    display: block;
+}
+
+
+/* Diário de uma Apotecária */
+
+.apotecaria::before {
+    background: #78b58b;
+}
+
+
+/* ==========================================
+   ANIMAÇÃO
+========================================== */
+
+@keyframes aparecerCasal {
+
+    from {
+        opacity: 0;
+
+        transform:
+            scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            scale(1);
+    }
+
+}
+
+
+/* CELULAR */
+
+@media (max-width: 750px) {
+
+    .casal img {
+        height: 320px;
+    }
+
+}
