@@ -1379,6 +1379,25 @@ h2 {
     background: #78b58b;
 }
 
+/* Pokémon */
+.pokemon::before {
+    background: #e879b9;
+}
+
+/* Uma Musume */
+.umamusume::before {
+    background: #9b72cf;
+}
+
+/* Blue Lock */
+.bluelock::before {
+    background: #397de8;
+}
+
+.universos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
 
 /* ==========================================
    ANIMAÇÃO
