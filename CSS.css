@@ -2352,3 +2352,109 @@ body {
             rotate(35deg);
     }
 }
+
+/* ==========================================
+   CORREÇÃO DOS CARDS NO CELULAR
+   ========================================== */
+
+@media (max-width: 700px) {
+
+    .universos {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+
+        width: 100%;
+        max-width: 430px;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        padding-left: 16px;
+        padding-right: 16px;
+
+        box-sizing: border-box;
+    }
+
+    .universo {
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+
+        box-sizing: border-box;
+
+        padding: 28px 20px;
+
+        margin: 0;
+    }
+
+    .universo h3 {
+        font-size: clamp(28px, 8vw, 40px);
+        line-height: 1.15;
+
+        overflow-wrap: normal;
+        word-break: normal;
+        hyphens: none;
+    }
+
+    .universo .casal {
+        font-size: 20px;
+        line-height: 1.45;
+
+        overflow-wrap: normal;
+        word-break: normal;
+    }
+
+    .universo .ver-casal {
+        width: fit-content;
+        max-width: 100%;
+
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.universo {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+}
+
+.universo.visivel {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.botao-fechar-carta {
+    display: block;
+
+    margin: 30px auto 5px;
+    padding: 12px 24px;
+
+    border: 1px solid rgba(255, 150, 190, 0.35);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    color: #f5a5c4;
+
+    font-family: inherit;
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+}
+
+.botao-fechar-carta:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 150, 190, 0.12);
+}
+
+.botao-fechar-carta:active {
+    transform: scale(0.96);
+}

@@ -794,46 +794,64 @@ document.addEventListener(
 function abrirCarta() {
 
     const container =
-        document.getElementById(
-            "cartaContainer"
-        );
-
+        document.getElementById("cartaContainer");
 
     if (!container) {
         return;
     }
 
-
-    const jaEstavaAberta =
-        container.classList.contains(
-            "aberta"
-        );
+    const estaAberta =
+        container.classList.contains("aberta");
 
 
-    container.classList.add(
-        "aberta"
-    );
+    // ==========================
+    // FECHAR CARTA
+    // ==========================
 
+    if (estaAberta) {
 
-    /*
-        As pétalas aparecem apenas
-        na primeira abertura.
-    */
+        // Inicia a animação de fechamento
+        container.classList.add("fechando");
 
-    if (!jaEstavaAberta) {
+        // Espera a animação terminar
+        setTimeout(function () {
 
-        setTimeout(
+            container.classList.remove("aberta");
+            container.classList.remove("fechando");
 
-            soltarPetalasDaCarta,
+        }, 600);
 
-            250
-
-        );
-
+        return;
     }
 
+
+    // ==========================
+    // ABRIR CARTA
+    // ==========================
+
+    container.classList.add("aberta");
+
+    setTimeout(
+        soltarPetalasDaCarta,
+        250
+    );
 }
 
+function fecharCarta(evento) {
+
+    if (evento) {
+        evento.stopPropagation();
+    }
+
+    const container =
+        document.getElementById("cartaContainer");
+
+    if (!container) {
+        return;
+    }
+
+    container.classList.remove("aberta");
+}
 
 // ==========================================
 // JARDIM ROMÂNTICO DO SITE
@@ -1692,3 +1710,35 @@ function efeitoCoracaoFinal(coracao) {
 
     }, 650);
 }
+
+const observadorCards = new IntersectionObserver(
+    function (entradas) {
+
+        entradas.forEach(function (entrada) {
+
+            if (entrada.isIntersecting) {
+
+                entrada.target.classList.add("visivel");
+
+                observadorCards.unobserve(
+                    entrada.target
+                );
+            }
+
+        });
+
+    },
+
+    {
+        threshold: 0.15
+    }
+);
+
+
+document.querySelectorAll(".universo").forEach(
+    function (card) {
+
+        observadorCards.observe(card);
+
+    }
+);
