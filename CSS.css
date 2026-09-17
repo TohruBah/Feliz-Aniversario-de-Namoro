@@ -1393,11 +1393,6 @@ h2 {
     background: #397de8;
 }
 
-.universos-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
-
 /* ==========================================
    ANIMAÇÃO
 ========================================== */
