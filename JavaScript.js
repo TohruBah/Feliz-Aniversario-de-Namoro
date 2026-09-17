@@ -607,53 +607,88 @@ function mostrarCasal(card) {
     }
 
 
-    const estavaAberto =
-        card.classList.contains(
-            "aberto"
-        );
+    // Se clicou no card que já está
+    // ampliado, fecha.
+    if (card.classList.contains("ampliado")) {
 
-
-    const todosCards =
-        document.querySelectorAll(
-            ".universo"
-        );
-
-
-    todosCards.forEach(
-
-        function (outroCard) {
-
-            outroCard.classList.remove(
-                "aberto"
-            );
-
-        }
-
-    );
-    /*
-        Clicou novamente no mesmo card:
-        fecha e volta para a música principal.
-    */
-
-    if (estavaAberto) {
-
-        voltarMusicaPrincipal();
+        fecharUniversoAmpliado();
 
         return;
+    }
+
+
+    // Fecha qualquer outro universo aberto
+    document
+        .querySelectorAll(".universo.aberto")
+        .forEach(function (outroCard) {
+
+            outroCard.classList.remove(
+                "aberto",
+                "ampliado"
+            );
+
+        });
+
+
+    // Abre o universo escolhido
+    card.classList.add(
+        "aberto",
+        "ampliado"
+    );
+
+
+    // ======================================
+    // CRIA O FUNDO ESCURO
+    // ======================================
+
+    let overlay =
+        document.querySelector(
+            ".universo-overlay"
+        );
+
+
+    if (!overlay) {
+
+        overlay =
+            document.createElement("div");
+
+        overlay.className =
+            "universo-overlay";
+
+
+        document.body.appendChild(
+            overlay
+        );
+
+
+        // Clicar fora fecha o Universo
+        overlay.addEventListener(
+            "click",
+            fecharUniversoAmpliado
+        );
 
     }
 
 
-    /*
-        Abre o novo card.
-    */
+    // Mostra o overlay
+    requestAnimationFrame(function () {
 
-    card.classList.add(
-        "aberto"
+        overlay.classList.add(
+            "ativo"
+        );
+
+    });
+
+
+    // Bloqueia o scroll do fundo
+    document.body.classList.add(
+        "universo-aberto"
     );
-    /*
-        Música do casal.
-    */
+
+
+    // ======================================
+    // MÚSICA DO CASAL
+    // ======================================
 
     const musica =
         card.dataset.musica;
@@ -666,6 +701,57 @@ function mostrarCasal(card) {
         );
 
     }
+
+}
+
+// ==========================================
+// FECHAR UNIVERSO AMPLIADO
+// ==========================================
+
+function fecharUniversoAmpliado() {
+
+    const card =
+        document.querySelector(
+            ".universo.ampliado"
+        );
+
+
+    const overlay =
+        document.querySelector(
+            ".universo-overlay"
+        );
+
+
+    // Fecha o card
+    if (card) {
+
+        card.classList.remove(
+            "ampliado",
+            "aberto"
+        );
+
+    }
+
+
+    // Esconde o fundo
+    if (overlay) {
+
+        overlay.classList.remove(
+            "ativo"
+        );
+
+    }
+
+
+    // Libera o scroll
+    document.body.classList.remove(
+        "universo-aberto"
+    );
+
+
+    // Volta para a música principal
+    // usando o fade suave já existente
+    voltarMusicaPrincipal();
 
 }
 
@@ -1815,7 +1901,7 @@ function abrirSurpresinha() {
 
 
 // ==========================================
-// ABRIR CARD DA SURPRESA
+// ABRIR CARD DA SURPRESINHA
 // ==========================================
 
 function mostrarSurpresa(card) {
@@ -1825,54 +1911,89 @@ function mostrarSurpresa(card) {
     }
 
 
-    const estavaAberto =
-        card.classList.contains(
-            "aberto"
-        );
+    // Se já estiver ampliado,
+    // clicar nele novamente fecha.
+    if (card.classList.contains("ampliado")) {
+
+        fecharSurpresaAmpliada();
+
+        return;
+    }
 
 
-    // Fecha todos os outros cards
+    // Fecha qualquer outro card aberto
     document
-        .querySelectorAll(
-            ".surpresa-card.aberto"
-        )
+        .querySelectorAll(".surpresa-card.aberto")
         .forEach(function (outroCard) {
 
             outroCard.classList.remove(
-                "aberto"
+                "aberto",
+                "ampliado"
             );
 
         });
 
 
-    // Se clicou no card que já estava
-    // aberto, apenas fecha.
-    if (estavaAberto) {
-        return;
-    }
-
-
     // Abre o card escolhido
     card.classList.add(
-        "aberto"
+        "aberto",
+        "ampliado"
     );
 
 
-    // Pega a música
+    // Cria o fundo escuro
+    let overlay =
+        document.querySelector(
+            ".surpresa-overlay"
+        );
+
+
+    if (!overlay) {
+
+        overlay =
+            document.createElement("div");
+
+        overlay.className =
+            "surpresa-overlay";
+
+        document.body.appendChild(
+            overlay
+        );
+
+
+        // Clicar fora fecha o card
+        overlay.addEventListener(
+            "click",
+            fecharSurpresaAmpliada
+        );
+
+    }
+
+
+    // Mostra o fundo
+    requestAnimationFrame(function () {
+
+        overlay.classList.add(
+            "ativo"
+        );
+
+    });
+
+
+    // Bloqueia scroll
+    document.body.classList.add(
+        "surpresa-aberta"
+    );
+
+
+    // Música do card
     const musica =
         card.dataset.musica;
 
 
-    if (!musica) {
-        return;
-    }
-
-
-    // Usa o mesmo sistema de música
-    // utilizado pelos cards dos universos.
     if (
-        typeof tocarMusicaCasal
-        === "function"
+        musica &&
+        typeof tocarMusicaCasal === "function"
     ) {
 
         tocarMusicaCasal(
@@ -1880,5 +2001,55 @@ function mostrarSurpresa(card) {
         );
 
     }
+
+}
+
+
+
+// ==========================================
+// FECHAR CARD AMPLIADO
+// ==========================================
+
+function fecharSurpresaAmpliada() {
+
+    const card =
+        document.querySelector(
+            ".surpresa-card.ampliado"
+        );
+
+
+    const overlay =
+        document.querySelector(
+            ".surpresa-overlay"
+        );
+
+
+    if (card) {
+
+        card.classList.remove(
+            "ampliado",
+            "aberto"
+        );
+
+    }
+
+
+    if (overlay) {
+
+        overlay.classList.remove(
+            "ativo"
+        );
+
+    }
+
+
+    document.body.classList.remove(
+        "surpresa-aberta"
+    );
+
+
+    // Volta suavemente para
+    // a música principal
+    voltarMusicaPrincipal();
 
 }

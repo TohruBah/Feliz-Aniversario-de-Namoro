@@ -2882,3 +2882,264 @@ body {
     }
 
 }
+
+/* ==========================================
+   SURPRESINHA - CARD AMPLIADO
+========================================== */
+
+/* Fundo escuro atrás do card */
+.surpresa-overlay {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9998;
+
+    background: rgba(5, 3, 10, 0.78);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.4s ease,
+        visibility 0.4s ease;
+}
+
+
+/* Overlay ativo */
+.surpresa-overlay.ativo {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* Card ampliado */
+.surpresa-card.ampliado {
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    z-index: 9999;
+
+    width: min(620px, calc(100vw - 40px));
+    max-height: calc(100vh - 40px);
+
+    margin: 0;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+
+    overflow-y: auto;
+
+    box-shadow:
+        0 30px 100px
+        rgba(0, 0, 0, 0.65);
+
+    animation:
+        ampliarCardSurpresa
+        0.45s
+        cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* Imagem maior */
+.surpresa-card.ampliado
+.surpresa-imagem img {
+    width: 100%;
+
+    height: auto;
+
+    max-height: 70vh;
+
+    object-fit: contain;
+
+    border-radius: 20px;
+}
+
+
+/* Animação */
+@keyframes ampliarCardSurpresa {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.75);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+
+}
+
+
+/* Evita rolagem da página
+   enquanto o card está ampliado */
+body.surpresa-aberta {
+    overflow: hidden;
+}
+
+
+/* ==========================================
+   CELULAR
+========================================== */
+
+@media (max-width: 750px) {
+
+    .surpresa-card.ampliado {
+        width: calc(100vw - 24px);
+
+        max-height: calc(100vh - 30px);
+    }
+
+
+    .surpresa-card.ampliado
+    .surpresa-imagem img {
+        max-height: 65vh;
+
+        object-fit: contain;
+    }
+
+}
+
+/* ==========================================
+   UNIVERSOS - CARD AMPLIADO
+========================================== */
+
+/* Fundo escuro */
+.universo-overlay {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9998;
+
+    background: rgba(5, 3, 10, 0.78);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.4s ease,
+        visibility 0.4s ease;
+}
+
+
+/* Fundo ativo */
+.universo-overlay.ativo {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* Card centralizado */
+.universo.ampliado {
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    z-index: 9999;
+
+    width: min(620px, calc(100vw - 40px));
+    max-height: calc(100vh - 40px);
+
+    margin: 0;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+
+    overflow-y: auto;
+
+    box-shadow:
+        0 30px 100px
+        rgba(0, 0, 0, 0.65);
+
+    animation:
+        ampliarUniverso
+        0.45s
+        cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* Imagem do casal ampliada */
+.universo.ampliado
+.casal img {
+    width: 100%;
+
+    height: auto;
+
+    max-height: 68vh;
+
+    object-fit: contain;
+
+    border-radius: 20px;
+}
+
+
+/* Animação de abertura */
+@keyframes ampliarUniverso {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.75);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+
+}
+
+
+/* Impede scroll do site */
+body.universo-aberto {
+    overflow: hidden;
+}
+
+
+/* ==========================================
+   CELULAR
+========================================== */
+
+@media (max-width: 750px) {
+
+    .universo.ampliado {
+        width: calc(100vw - 24px);
+
+        max-height: calc(100vh - 30px);
+    }
+
+
+    .universo.ampliado
+    .casal img {
+        width: 100%;
+
+        height: auto;
+
+        max-height: 65vh;
+
+        object-fit: contain;
+    }
+
+}
