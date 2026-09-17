@@ -1528,207 +1528,315 @@ h2 {
 }
 
 /* ==========================================
-   CARTA INTERATIVA
+   CARTA INTERATIVA + JARDIM ROMÂNTICO
 ========================================== */
 
 .carta-container {
     width: 100%;
     max-width: 750px;
-
     margin: 0 auto;
-
     display: flex;
     flex-direction: column;
-
     justify-content: center;
     align-items: center;
-
     text-align: center;
 }
 
-
-/* ==========================================
-   BOTÃO DA CARTA
-========================================== */
-
 .botao-carta {
     width: min(420px, 90%);
-
-    /* Sobrescreve o margin do button global */
     margin: 0 auto;
-
     padding: 35px 30px;
-
     display: flex;
     flex-direction: column;
-
     justify-content: center;
     align-items: center;
-
     gap: 10px;
-
     border-radius: 28px;
-
-    border:
-        1px solid rgba(244, 127, 164, 0.35);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(232, 92, 137, 0.20),
-            rgba(145, 76, 190, 0.18)
-        );
-
+    border: 1px solid rgba(244, 127, 164, 0.35);
+    background: linear-gradient(145deg, rgba(232, 92, 137, 0.20), rgba(145, 76, 190, 0.18));
     backdrop-filter: blur(15px);
-
     cursor: pointer;
-
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.35),
-        0 0 35px rgba(232, 92, 137, 0.08);
-
-    transition:
-        transform 0.4s ease,
-        border-color 0.4s ease,
-        box-shadow 0.4s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 0 35px rgba(232, 92, 137, 0.08);
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
 }
-
 
 .botao-carta:hover {
-    transform:
-        translateY(-7px)
-        scale(1.03);
-
-    border-color:
-        rgba(244, 127, 164, 0.7);
-
-    box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.4),
-        0 0 40px rgba(232, 92, 137, 0.2);
+    transform: translateY(-7px) scale(1.03);
+    border-color: rgba(244, 127, 164, 0.7);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4), 0 0 40px rgba(232, 92, 137, 0.2);
 }
-
-
-/* ==========================================
-   CONTEÚDO DO BOTÃO
-========================================== */
 
 .icone-envelope {
     display: block;
-
     font-size: 65px;
-
     line-height: 1;
-
     margin-bottom: 8px;
-
-    animation:
-        envelopeFlutuando
-        2s ease-in-out infinite;
+    animation: envelopeFlutuando 2s ease-in-out infinite;
 }
-
 
 .texto-envelope {
     display: block;
-
-    font-family:
-        'Playfair Display',
-        serif;
-
+    font-family: 'Playfair Display', serif;
     font-size: 27px;
-
     font-weight: 500;
-
     color: #ffffff;
 }
 
-
 .dica-envelope {
     display: block;
-
     margin-top: 3px;
-
     font-size: 12px;
-
     letter-spacing: 1px;
-
     color: #f48aaa;
 }
 
-
-/* ==========================================
-   CARTA FECHADA
-========================================== */
-
 .carta-container .carta {
     display: none;
-
     width: 100%;
-
     margin: 0 auto;
 }
-
-
-/* ==========================================
-   CARTA ABERTA
-========================================== */
 
 .carta-container.aberta .botao-carta {
     display: none;
 }
 
-
 .carta-container.aberta .carta {
     display: block;
-
-    animation:
-        abrirCartaAnimacao
-        0.9s cubic-bezier(
-            0.22,
-            1,
-            0.36,
-            1
-        );
+    animation: abrirCartaAnimacao 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* A carta já recebe fundo, padding e tipografia na seção CARTA acima. */
+.carta {
+    position: relative;
+    overflow: visible;
+    border: 1px solid rgba(189, 85, 117, 0.35);
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.4), 0 0 40px rgba(189, 85, 117, 0.08);
+}
 
-/* ==========================================
-   ANIMAÇÕES
-========================================== */
+.carta > *:not(.jardim-carta) {
+    position: relative;
+    z-index: 3;
+}
+
+.jardim-carta {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: inherit;
+}
+
+.ramo-carta {
+    position: absolute;
+    bottom: -15px;
+    width: 85px;
+    height: 92%;
+    transform-origin: bottom center;
+    transform: scaleY(0);
+    opacity: 0;
+}
+
+.ramo-esquerdo {
+    left: -5px;
+    border-left: 3px solid rgba(143, 64, 91, 0.55);
+    border-radius: 60% 0 0 40%;
+}
+
+.ramo-direito {
+    right: -5px;
+    border-right: 3px solid rgba(143, 64, 91, 0.55);
+    border-radius: 0 60% 40% 0;
+}
+
+.ramo-carta::before,
+.ramo-carta::after {
+    content: "";
+    position: absolute;
+    width: 55px;
+    height: 120px;
+    border-radius: 50%;
+    opacity: 0.55;
+}
+
+.ramo-esquerdo::before {
+    left: -2px;
+    top: 20%;
+    border-top: 2px solid #a34c67;
+    transform: rotate(25deg);
+}
+
+.ramo-esquerdo::after {
+    left: 0;
+    top: 58%;
+    border-top: 2px solid #a34c67;
+    transform: rotate(-22deg);
+}
+
+.ramo-direito::before {
+    right: -2px;
+    top: 30%;
+    border-top: 2px solid #a34c67;
+    transform: rotate(-25deg);
+}
+
+.ramo-direito::after {
+    right: 0;
+    top: 65%;
+    border-top: 2px solid #a34c67;
+    transform: rotate(22deg);
+}
+
+.folha,
+.flor {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    user-select: none;
+    opacity: 0;
+    scale: 0;
+    transform-origin: center;
+}
+
+.folha {
+    color: #bd5575;
+    font-size: 20px;
+    text-shadow: 0 0 10px rgba(189, 85, 117, 0.3);
+}
+
+.flor {
+    color: #d87594;
+    font-size: 25px;
+    text-shadow: 0 0 12px rgba(216, 117, 148, 0.35);
+}
+
+.ramo-esquerdo .f1 { bottom: 5%; left: 2px; }
+.ramo-esquerdo .f2 { bottom: 18%; left: 25px; }
+.ramo-esquerdo .f3 { bottom: 31%; left: -4px; }
+.ramo-esquerdo .f4 { bottom: 44%; left: 24px; }
+.ramo-esquerdo .f5 { bottom: 58%; left: 0; }
+.ramo-esquerdo .f6 { bottom: 72%; left: 22px; }
+.ramo-esquerdo .f7 { bottom: 87%; left: 5px; }
+
+.ramo-direito .f1 { bottom: 8%; right: 2px; }
+.ramo-direito .f2 { bottom: 21%; right: 25px; }
+.ramo-direito .f3 { bottom: 34%; right: -2px; }
+.ramo-direito .f4 { bottom: 48%; right: 25px; }
+.ramo-direito .f5 { bottom: 62%; right: -2px; }
+.ramo-direito .f6 { bottom: 75%; right: 25px; }
+.ramo-direito .f7 { bottom: 89%; right: 4px; }
+
+.raiz-carta {
+    position: absolute;
+    bottom: 3px;
+    width: 47%;
+    height: 55px;
+    opacity: 0;
+    transform-origin: center;
+    scale: 0.4;
+}
+
+.raiz-esquerda {
+    left: 15px;
+    border-bottom: 2px solid #a34c67;
+    border-radius: 0 0 80% 50%;
+}
+
+.raiz-direita {
+    right: 15px;
+    border-bottom: 2px solid #a34c67;
+    border-radius: 0 0 50% 80%;
+}
+
+.raiz-carta::before,
+.raiz-carta::after {
+    content: "";
+    position: absolute;
+    bottom: 5px;
+    width: 45%;
+    height: 25px;
+    border-bottom: 1px solid rgba(163, 76, 103, 0.65);
+    border-radius: 50%;
+}
+
+.raiz-carta::before { left: 15%; transform: rotate(8deg); }
+.raiz-carta::after { right: 5%; transform: rotate(-8deg); }
+
+.carta-container.aberta .raiz-carta {
+    animation: crescerRaiz 1.2s ease 0.25s forwards;
+}
+
+.carta-container.aberta .ramo-carta {
+    animation: crescerVinha 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
+}
+
+.carta-container.aberta .ramo-direito { animation-delay: 0.65s; }
+
+.carta-container.aberta .ramo-esquerdo .f1 { animation: nascerCoracao 0.5s ease 0.70s forwards; }
+.carta-container.aberta .ramo-esquerdo .f2 { animation: nascerCoracao 0.5s ease 0.95s forwards; }
+.carta-container.aberta .ramo-esquerdo .f3 { animation: nascerFlor 0.6s ease 1.20s forwards; }
+.carta-container.aberta .ramo-esquerdo .f4 { animation: nascerCoracao 0.5s ease 1.40s forwards; }
+.carta-container.aberta .ramo-esquerdo .f5 { animation: nascerCoracao 0.5s ease 1.60s forwards; }
+.carta-container.aberta .ramo-esquerdo .f6 { animation: nascerFlor 0.6s ease 1.80s forwards; }
+.carta-container.aberta .ramo-esquerdo .f7 { animation: nascerCoracao 0.5s ease 2.00s forwards; }
+
+.carta-container.aberta .ramo-direito .f1 { animation: nascerCoracao 0.5s ease 0.90s forwards; }
+.carta-container.aberta .ramo-direito .f2 { animation: nascerFlor 0.6s ease 1.15s forwards; }
+.carta-container.aberta .ramo-direito .f3 { animation: nascerCoracao 0.5s ease 1.35s forwards; }
+.carta-container.aberta .ramo-direito .f4 { animation: nascerCoracao 0.5s ease 1.55s forwards; }
+.carta-container.aberta .ramo-direito .f5 { animation: nascerFlor 0.6s ease 1.75s forwards; }
+.carta-container.aberta .ramo-direito .f6 { animation: nascerCoracao 0.5s ease 1.95s forwards; }
+.carta-container.aberta .ramo-direito .f7 { animation: nascerCoracao 0.5s ease 2.15s forwards; }
 
 @keyframes abrirCartaAnimacao {
-
-    from {
-        opacity: 0;
-
-        transform:
-            translateY(45px)
-            scale(0.92);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(0)
-            scale(1);
-    }
-
+    from { opacity: 0; transform: translateY(45px) scale(0.92); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
-
 
 @keyframes envelopeFlutuando {
-
-    0%,
-    100% {
-        transform:
-            translateY(0)
-            rotate(-2deg);
-    }
-
-    50% {
-        transform:
-            translateY(-8px)
-            rotate(2deg);
-    }
-
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-8px) rotate(2deg); }
 }
+
+@keyframes crescerVinha {
+    0% { transform: scaleY(0); opacity: 0; }
+    30% { opacity: 0.6; }
+    100% { transform: scaleY(1); opacity: 0.9; }
+}
+
+@keyframes nascerCoracao {
+    0% { opacity: 0; scale: 0; }
+    60% { opacity: 1; scale: 1.35; }
+    100% { opacity: 1; scale: 1; }
+}
+
+@keyframes nascerFlor {
+    0% { opacity: 0; scale: 0; rotate: -40deg; }
+    70% { opacity: 1; scale: 1.3; rotate: 10deg; }
+    100% { opacity: 1; scale: 1; rotate: 0deg; }
+}
+
+@keyframes crescerRaiz {
+    0% { opacity: 0; scale: 0.3; }
+    100% { opacity: 0.45; scale: 1; }
+}
+
+@media (max-width: 600px) {
+    .botao-carta { width: 90%; padding: 30px 20px; }
+    .icone-envelope { font-size: 55px; }
+    .texto-envelope { font-size: 23px; }
+    .ramo-carta { width: 50px; }
+    .ramo-esquerdo { left: -5px; }
+    .ramo-direito { right: -5px; }
+    .folha { font-size: 14px; }
+    .flor { font-size: 18px; }
+    .ramo-esquerdo .f2,
+    .ramo-esquerdo .f4,
+    .ramo-esquerdo .f6 { left: 15px; }
+    .ramo-direito .f2,
+    .ramo-direito .f4,
+    .ramo-direito .f6 { right: 15px; }
+}
+

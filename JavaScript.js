@@ -77,7 +77,9 @@ function alternarMusica() {
         !youtubePlayer ||
         typeof youtubePlayer.getPlayerState !== "function"
     ) {
+
         return;
+
     }
 
 
@@ -117,7 +119,9 @@ function atualizarBotaoMusica() {
 
 
     if (!botao || !icone || !texto) {
+
         return;
+
     }
 
 
@@ -167,7 +171,9 @@ function tocarMusicaCasal(videoId) {
         !youtubePlayer ||
         typeof youtubePlayer.loadVideoById !== "function"
     ) {
+
         return;
+
     }
 
 
@@ -212,12 +218,16 @@ function voltarMusicaPrincipal() {
         !youtubePlayer ||
         typeof youtubePlayer.loadVideoById !== "function"
     ) {
+
         return;
+
     }
 
 
     if (musicaAtual === VIDEO_PRINCIPAL) {
+
         return;
+
     }
 
 
@@ -468,23 +478,54 @@ function mostrarCasal(card) {
 // CORAÇÃO AO CLICAR NA TELA
 // ==========================================
 
-document.addEventListener("click", function (event) {
+document.addEventListener(
+    "click",
+    function (event) {
 
-    const coracao = document.createElement("span");
+        // Cria o coração
 
-    coracao.classList.add("coracao-clique");
-    coracao.innerHTML = "❤";
+        const coracao =
+            document.createElement("span");
 
-    coracao.style.left = event.clientX + "px";
-    coracao.style.top = event.clientY + "px";
 
-    document.body.appendChild(coracao);
+        coracao.classList.add(
+            "coracao-clique"
+        );
 
-    setTimeout(function () {
-        coracao.remove();
-    }, 1200);
 
-});
+        coracao.innerHTML =
+            "❤";
+
+
+        // Posição do clique
+
+        coracao.style.left =
+            event.clientX + "px";
+
+        coracao.style.top =
+            event.clientY + "px";
+
+
+        // Coloca o coração na página
+
+        document.body.appendChild(
+            coracao
+        );
+
+
+        // Remove depois da animação
+
+        setTimeout(
+            function () {
+
+                coracao.remove();
+
+            },
+            1200
+        );
+
+    }
+);
 
 
 // ==========================================
@@ -493,14 +534,34 @@ document.addEventListener("click", function (event) {
 
 function abrirCarta() {
 
-    const container = document.getElementById("cartaContainer");
+    const container =
+        document.getElementById(
+            "cartaContainer"
+        );
+
 
     if (!container) {
-        console.error("cartaContainer não foi encontrado.");
+
+        console.error(
+            "cartaContainer não foi encontrado."
+        );
+
         return;
+
     }
 
-    container.classList.add("aberta");
+
+    // Adiciona a classe que abre a carta.
+    // O CSS usa essa mesma classe para iniciar:
+    //
+    // - abertura da carta
+    // - crescimento das raízes
+    // - crescimento das vinhas
+    // - nascimento dos corações
+    // - nascimento das flores
+
+    container.classList.add(
+        "aberta"
+    );
 
 }
-
