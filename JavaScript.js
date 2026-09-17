@@ -630,11 +630,8 @@ function mostrarCasal(card) {
         }
 
     );
-
-
     /*
-        Se clicar novamente no casal
-        que já estava aberto:
+        Clicou novamente no mesmo card:
         fecha e volta para a música principal.
     */
 
@@ -647,10 +644,16 @@ function mostrarCasal(card) {
     }
 
 
+    /*
+        Abre o novo card.
+    */
+
     card.classList.add(
         "aberto"
     );
-
+    /*
+        Música do casal.
+    */
 
     const musica =
         card.dataset.musica;
@@ -951,16 +954,13 @@ function criarCoracaoCadente() {
 
 
     coracao.style.setProperty(
-
-        "--tamanho",
-
-        (
-            12 +
-            Math.random() * 9
-        ) +
-        "px"
-
-    );
+    "--tamanho",
+    (
+        20 +
+        Math.random() * 14
+    ) +
+    "px"
+);
 
 
     coracao.style.setProperty(
@@ -1044,46 +1044,51 @@ function criarCoracaoCadente() {
 
 function agendarProximoCoracaoCadente() {
 
-    /*
-        Depois do primeiro teste,
-        os corações aparecem entre
-        aproximadamente 5 e 10 segundos.
-    */
-
+    // Próxima queda entre 1,5 e 3,5 segundos
     const espera =
-        5000 +
-        Math.random() * 5000;
+        1500 +
+        Math.random() * 2000;
 
 
     setTimeout(
 
         function () {
 
+            // Sempre cria pelo menos 1 coração
             criarCoracaoCadente();
 
 
-            /*
-                Pequena chance de surgir
-                um segundo coração.
-            */
+            const chance =
+                Math.random();
 
-            if (
-                Math.random() <
-                0.22
-            ) {
+
+            // 25% de chance de cair 3 corações
+            if (chance < 0.25) {
 
                 setTimeout(
-
                     criarCoracaoCadente,
+                    250
+                );
 
-                    700 +
-                    Math.random() * 800
+                setTimeout(
+                    criarCoracaoCadente,
+                    550
+                );
 
+            }
+
+            // 35% de chance de cair 2 corações
+            else if (chance < 0.60) {
+
+                setTimeout(
+                    criarCoracaoCadente,
+                    350
                 );
 
             }
 
 
+            // Agenda a próxima queda
             agendarProximoCoracaoCadente();
 
         },
@@ -1094,13 +1099,6 @@ function agendarProximoCoracaoCadente() {
 
 }
 
-
-/*
-    Primeiro coração aparece rápido
-    para ser possível perceber que
-    o efeito está funcionando.
-*/
-
 setTimeout(
     criarCoracaoCadente,
     1800
@@ -1108,7 +1106,6 @@ setTimeout(
 
 
 agendarProximoCoracaoCadente();
-
 
 // ==========================================
 // 2. CORAÇÕES SEGUINDO O MOUSE
@@ -1125,7 +1122,7 @@ document.addEventListener(
 
         /*
             Não executa em toque.
-    */
+        */
 
         if (
             evento.pointerType &&
@@ -1141,7 +1138,8 @@ document.addEventListener(
 
         /*
             Evita criar partículas
-            demais.
+            em todos os movimentos
+            do mouse.
         */
 
         if (
@@ -1159,7 +1157,8 @@ document.addEventListener(
 
         /*
             Nem todo movimento gera
-            um coração.
+            um coração. Isso deixa
+            o efeito mais delicado.
         */
 
         if (
@@ -1185,11 +1184,6 @@ document.addEventListener(
                 ? "♥"
                 : "♡";
 
-
-        /*
-            Pequena variação de posição
-            deixa o efeito mais natural.
-        */
 
         const variacaoX =
             -5 +
@@ -1218,15 +1212,18 @@ document.addEventListener(
         );
 
 
-        const remover = function () {
+        const remover =
+            function () {
 
-            if (coracao.isConnected) {
+                if (
+                    coracao.isConnected
+                ) {
 
-                coracao.remove();
+                    coracao.remove();
 
-            }
+                }
 
-        };
+            };
 
 
         coracao.addEventListener(
@@ -1237,13 +1234,12 @@ document.addEventListener(
 
         setTimeout(
             remover,
-            1300
+            1500
         );
 
     }
 
 );
-
 
 // ==========================================
 // 3. PÉTALAS AO ABRIR A CARTA
@@ -1583,6 +1579,7 @@ window.addEventListener(
 
 atualizarFundoComScroll();
 
+
 // ==========================================
 // CORAÇÃO INTERATIVO DO FINAL
 // ==========================================
@@ -1592,6 +1589,7 @@ const somCoracaoFinal = new Audio(
 );
 
 somCoracaoFinal.volume = 0.8;
+
 
 function efeitoCoracaoFinal(coracao) {
 
