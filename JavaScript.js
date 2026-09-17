@@ -636,6 +636,8 @@ function mostrarCasal(card) {
         "ampliado"
     );
 
+    mostrarBotoesNavegacao("universos");
+
 
     // ======================================
     // CRIA O FUNDO ESCURO
@@ -748,6 +750,7 @@ function fecharUniversoAmpliado() {
         "universo-aberto"
     );
 
+    esconderBotoesNavegacao();
 
     // Volta para a música principal
     // usando o fade suave já existente
@@ -1940,6 +1943,8 @@ function mostrarSurpresa(card) {
         "ampliado"
     );
 
+    mostrarBotoesNavegacao("surpresinha");
+
 
     // Cria o fundo escuro
     let overlay =
@@ -2047,9 +2052,417 @@ function fecharSurpresaAmpliada() {
         "surpresa-aberta"
     );
 
+    esconderBotoesNavegacao();
 
     // Volta suavemente para
     // a música principal
     voltarMusicaPrincipal();
 
 }
+
+// ==========================================
+// NAVEGAÇÃO DOS CARDS AMPLIADOS
+// UNIVERSOS + SURPRESINHA
+// ==========================================
+
+let tipoGaleriaAtual = null;
+
+let inicioSwipeX = 0;
+let inicioSwipeY = 0;
+
+
+// ==========================================
+// CRIAR BOTÕES DE NAVEGAÇÃO
+// ==========================================
+
+function criarBotoesNavegacao() {
+
+    if (
+        document.querySelector(
+            ".botao-navegacao-card"
+        )
+    ) {
+        return;
+    }
+
+
+    const anterior =
+        document.createElement("button");
+
+    anterior.type = "button";
+
+    anterior.className =
+        "botao-navegacao-card anterior";
+
+    anterior.innerHTML = "‹";
+
+    anterior.setAttribute(
+        "aria-label",
+        "Anterior"
+    );
+
+
+    const proximo =
+        document.createElement("button");
+
+    proximo.type = "button";
+
+    proximo.className =
+        "botao-navegacao-card proximo";
+
+    proximo.innerHTML = "›";
+
+    proximo.setAttribute(
+        "aria-label",
+        "Próximo"
+    );
+
+
+    anterior.addEventListener(
+        "click",
+        function (evento) {
+
+            evento.stopPropagation();
+
+            navegarGaleria(-1);
+
+        }
+    );
+
+
+    proximo.addEventListener(
+        "click",
+        function (evento) {
+
+            evento.stopPropagation();
+
+            navegarGaleria(1);
+
+        }
+    );
+
+
+    document.body.appendChild(anterior);
+    document.body.appendChild(proximo);
+
+}
+
+
+// ==========================================
+// MOSTRAR SETAS
+// ==========================================
+
+function mostrarBotoesNavegacao(tipo) {
+
+    tipoGaleriaAtual = tipo;
+
+    criarBotoesNavegacao();
+
+
+    document
+        .querySelectorAll(
+            ".botao-navegacao-card"
+        )
+        .forEach(function (botao) {
+
+            botao.classList.add("ativo");
+
+        });
+
+}
+
+
+// ==========================================
+// ESCONDER SETAS
+// ==========================================
+
+function esconderBotoesNavegacao() {
+
+    tipoGaleriaAtual = null;
+
+
+    document
+        .querySelectorAll(
+            ".botao-navegacao-card"
+        )
+        .forEach(function (botao) {
+
+            botao.classList.remove("ativo");
+
+        });
+
+}
+
+
+// ==========================================
+// NAVEGAR
+// ==========================================
+
+function navegarGaleria(direcao) {
+
+    let seletor;
+
+
+    if (tipoGaleriaAtual === "universos") {
+
+        seletor = ".universo";
+
+    }
+
+    else if (
+        tipoGaleriaAtual === "surpresinha"
+    ) {
+
+        seletor = ".surpresa-card";
+
+    }
+
+    else {
+
+        return;
+
+    }
+
+
+    const cards =
+        Array.from(
+            document.querySelectorAll(seletor)
+        );
+
+
+    if (!cards.length) {
+        return;
+    }
+
+
+    const cardAtual =
+        cards.find(function (card) {
+
+            return card.classList.contains(
+                "ampliado"
+            );
+
+        });
+
+
+    if (!cardAtual) {
+        return;
+    }
+
+
+    let indiceAtual =
+        cards.indexOf(cardAtual);
+
+
+    let novoIndice =
+        indiceAtual + direcao;
+
+
+    // Último → primeiro
+    if (novoIndice >= cards.length) {
+
+        novoIndice = 0;
+
+    }
+
+
+    // Primeiro → último
+    if (novoIndice < 0) {
+
+        novoIndice =
+            cards.length - 1;
+
+    }
+
+
+    const novoCard =
+        cards[novoIndice];
+
+
+    // Remove o atual
+    cardAtual.classList.remove(
+        "aberto",
+        "ampliado"
+    );
+
+
+    // Abre o próximo
+    novoCard.classList.add(
+        "aberto",
+        "ampliado"
+    );
+
+
+    // Troca a música
+    const musica =
+        novoCard.dataset.musica;
+
+
+    if (
+        musica &&
+        typeof tocarMusicaCasal === "function"
+    ) {
+
+        tocarMusicaCasal(musica);
+
+    }
+
+}
+
+
+// ==========================================
+// TECLADO
+// ==========================================
+
+document.addEventListener(
+    "keydown",
+    function (evento) {
+
+        if (!tipoGaleriaAtual) {
+            return;
+        }
+
+
+        if (evento.key === "ArrowRight") {
+
+            navegarGaleria(1);
+
+        }
+
+
+        else if (
+            evento.key === "ArrowLeft"
+        ) {
+
+            navegarGaleria(-1);
+
+        }
+
+
+        else if (
+            evento.key === "Escape"
+        ) {
+
+            if (
+                tipoGaleriaAtual ===
+                "universos"
+            ) {
+
+                fecharUniversoAmpliado();
+
+            }
+
+            else if (
+                tipoGaleriaAtual ===
+                "surpresinha"
+            ) {
+
+                fecharSurpresaAmpliada();
+
+            }
+
+        }
+
+    }
+);
+
+
+// ==========================================
+// SWIPE NO CELULAR
+// ==========================================
+
+document.addEventListener(
+    "touchstart",
+    function (evento) {
+
+        if (!tipoGaleriaAtual) {
+            return;
+        }
+
+
+        if (
+            evento.touches.length !== 1
+        ) {
+            return;
+        }
+
+
+        inicioSwipeX =
+            evento.touches[0].clientX;
+
+        inicioSwipeY =
+            evento.touches[0].clientY;
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+document.addEventListener(
+    "touchend",
+    function (evento) {
+
+        if (!tipoGaleriaAtual) {
+            return;
+        }
+
+
+        if (
+            evento.changedTouches.length !== 1
+        ) {
+            return;
+        }
+
+
+        const finalX =
+            evento.changedTouches[0].clientX;
+
+        const finalY =
+            evento.changedTouches[0].clientY;
+
+
+        const diferencaX =
+            finalX - inicioSwipeX;
+
+        const diferencaY =
+            finalY - inicioSwipeY;
+
+
+        // Ignora movimentos verticais
+        if (
+            Math.abs(diferencaY) >
+            Math.abs(diferencaX)
+        ) {
+            return;
+        }
+
+
+        // Exige pelo menos 55px
+        if (
+            Math.abs(diferencaX) < 55
+        ) {
+            return;
+        }
+
+
+        // Arrastou para esquerda
+        if (diferencaX < 0) {
+
+            navegarGaleria(1);
+
+        }
+
+        // Arrastou para direita
+        else {
+
+            navegarGaleria(-1);
+
+        }
+
+    },
+    {
+        passive: true
+    }
+);

@@ -3143,3 +3143,106 @@ body.universo-aberto {
     }
 
 }
+
+/* ==========================================
+   NAVEGAÇÃO DOS CARDS AMPLIADOS
+========================================== */
+
+.botao-navegacao-card {
+    position: fixed;
+    top: 50%;
+
+    z-index: 10001;
+
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 50%;
+
+    background: rgba(30, 15, 45, 0.72);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    color: white;
+
+    font-size: 38px;
+    font-family: inherit;
+
+    cursor: pointer;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: translateY(-50%) scale(0.8);
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+
+/* Botão esquerdo */
+.botao-navegacao-card.anterior {
+    left: 28px;
+}
+
+
+/* Botão direito */
+.botao-navegacao-card.proximo {
+    right: 28px;
+}
+
+
+/* Botões visíveis */
+.botao-navegacao-card.ativo {
+    opacity: 1;
+    visibility: visible;
+
+    transform:
+        translateY(-50%)
+        scale(1);
+}
+
+
+/* Hover no PC */
+.botao-navegacao-card:hover {
+    background: rgba(180, 80, 160, 0.8);
+
+    transform:
+        translateY(-50%)
+        scale(1.1);
+}
+
+
+/* ==========================================
+   CELULAR
+========================================== */
+
+@media (max-width: 750px) {
+
+    .botao-navegacao-card {
+        width: 46px;
+        height: 46px;
+
+        font-size: 30px;
+    }
+
+
+    .botao-navegacao-card.anterior {
+        left: 8px;
+    }
+
+
+    .botao-navegacao-card.proximo {
+        right: 8px;
+    }
+
+}
