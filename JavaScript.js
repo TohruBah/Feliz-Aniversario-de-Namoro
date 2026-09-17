@@ -1582,3 +1582,115 @@ window.addEventListener(
 // Define o fundo inicial.
 
 atualizarFundoComScroll();
+
+// ==========================================
+// CORAÇÃO INTERATIVO DO FINAL
+// ==========================================
+
+const somCoracaoFinal = new Audio(
+    "sons/mambomambo.mp3"
+);
+
+somCoracaoFinal.volume = 0.8;
+
+function efeitoCoracaoFinal(coracao) {
+
+    // Toca o efeito sonoro enviado
+    somCoracaoFinal.currentTime = 0;
+
+    somCoracaoFinal.play().catch(function (erro) {
+        console.log("Não foi possível tocar o efeito:", erro);
+    });
+
+
+    // Reinicia a animação do coração
+    coracao.classList.remove("coracao-clicado");
+
+    void coracao.offsetWidth;
+
+    coracao.classList.add("coracao-clicado");
+
+
+    // Posição central do coração
+    const retangulo = coracao.getBoundingClientRect();
+
+    const centroX =
+        retangulo.left + retangulo.width / 2;
+
+    const centroY =
+        retangulo.top + retangulo.height / 2;
+
+
+    // Cria vários corações ao redor
+    for (let i = 0; i < 12; i++) {
+
+        const particula =
+            document.createElement("span");
+
+        particula.className =
+            "particula-coracao-final";
+
+        particula.textContent =
+            Math.random() > 0.5 ? "♥" : "♡";
+
+
+        particula.style.left =
+            centroX + "px";
+
+        particula.style.top =
+            centroY + "px";
+
+
+        // Distribui as partículas em círculo
+        const angulo =
+            (Math.PI * 2 / 12) * i +
+            (Math.random() * 0.3 - 0.15);
+
+
+        const distancia =
+            55 + Math.random() * 55;
+
+
+        const x =
+            Math.cos(angulo) * distancia;
+
+        const y =
+            Math.sin(angulo) * distancia;
+
+
+        particula.style.setProperty(
+            "--x-coracao",
+            x + "px"
+        );
+
+        particula.style.setProperty(
+            "--y-coracao",
+            y + "px"
+        );
+
+
+        // Pequenas diferenças entre partículas
+        particula.style.fontSize =
+            (12 + Math.random() * 10) + "px";
+
+
+        document.body.appendChild(particula);
+
+
+        setTimeout(function () {
+
+            particula.remove();
+
+        }, 1100);
+    }
+
+
+    // Remove a classe depois da animação
+    setTimeout(function () {
+
+        coracao.classList.remove(
+            "coracao-clicado"
+        );
+
+    }, 650);
+}

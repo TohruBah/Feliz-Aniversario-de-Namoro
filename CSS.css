@@ -2247,3 +2247,130 @@ body {
         animation-delay: 0s !important;
     }
 }
+
+/* ==========================================
+   CORAÇÃO INTERATIVO DO FINAL
+========================================== */
+
+.coracao-interativo {
+    cursor: pointer;
+    user-select: none;
+
+    transition:
+        transform 0.25s ease,
+        filter 0.25s ease;
+}
+
+.coracao-interativo:hover {
+    transform: scale(1.12);
+
+    filter:
+        drop-shadow(0 0 15px rgba(244, 127, 164, 0.8))
+        drop-shadow(0 0 30px rgba(244, 127, 164, 0.4));
+}
+
+
+/* Quando clicar */
+
+.coracao-interativo.coracao-clicado {
+    animation:
+        batidaCoracaoFinal 0.65s ease;
+}
+
+
+/* ==========================================
+   CORAÇÕES QUE SAEM DELE
+========================================== */
+
+.particula-coracao-final {
+    position: fixed;
+
+    z-index: 99999;
+
+    pointer-events: none;
+
+    color: #f47fa4;
+
+    text-shadow:
+        0 0 8px rgba(244, 127, 164, 0.8),
+        0 0 15px rgba(244, 127, 164, 0.4);
+
+    transform:
+        translate(-50%, -50%);
+
+    animation:
+        espalharCoracaoFinal 1s
+        cubic-bezier(0.18, 0.8, 0.35, 1)
+        forwards;
+}
+
+
+/* ==========================================
+   BATIDA DO CORAÇÃO
+========================================== */
+
+@keyframes batidaCoracaoFinal {
+
+    0% {
+        transform: scale(1);
+    }
+
+    18% {
+        transform: scale(1.4);
+    }
+
+    35% {
+        transform: scale(0.9);
+    }
+
+    52% {
+        transform: scale(1.25);
+    }
+
+    70% {
+        transform: scale(0.97);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+/* ==========================================
+   EXPLOSÃO DOS CORAÇÕES
+========================================== */
+
+@keyframes espalharCoracaoFinal {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.3)
+            rotate(0deg);
+    }
+
+
+    15% {
+
+        opacity: 1;
+
+    }
+
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translate(
+                calc(-50% + var(--x-coracao)),
+                calc(-50% + var(--y-coracao))
+            )
+            scale(1.4)
+            rotate(35deg);
+    }
+}
