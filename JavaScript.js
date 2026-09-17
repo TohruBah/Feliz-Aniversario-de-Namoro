@@ -356,96 +356,50 @@ function voltarMusicaPrincipal() {
 
 function abrirSite() {
 
-    // Garante que estamos usando
-    // a música principal.
-    if (
-        musicaAtual !==
-        MUSICA_PRINCIPAL
-    ) {
+    // Vai para o conteúdo do site
+    const conteudo =
+        document.getElementById("conteudo");
 
-        musicaAtual =
-            MUSICA_PRINCIPAL;
+    if (conteudo) {
 
-        audioMusica.src =
-            MUSICA_PRINCIPAL;
-
-        audioMusica.currentTime =
-            tempoMusicaPrincipal || 0;
+        conteudo.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
 
     }
 
+
+    // Garante que a música principal
+    // esteja selecionada
+    musicaAtual = MUSICA_PRINCIPAL;
+
+    audioMusica.src =
+        MUSICA_PRINCIPAL;
+
+    audioMusica.loop =
+        true;
 
     audioMusica.volume =
         1;
 
 
-    // Como abrirSite() acontece após
-    // um clique do usuário, o navegador
-    // permite iniciar o áudio.
-    audioMusica
-        .play()
+    // Inicia a música
+    audioMusica.play()
+        .then(function () {
+
+            atualizarBotaoMusica();
+
+        })
         .catch(function (erro) {
 
             console.log(
-                "Não foi possível iniciar a música principal:",
+                "Não foi possível iniciar a música:",
                 erro
             );
 
         });
-
-
-    const conteudo =
-        document.getElementById(
-            "conteudo"
-        );
-
-
-    if (conteudo) {
-
-        conteudo.scrollIntoView({
-
-            behavior:
-                "smooth"
-
-        });
-
-    }
 }
-
-// ==========================================
-// BOTÃO "NOSSA HISTORINHA"
-// ==========================================
-
-function abrirSite() {
-
-    if (
-        playerPronto &&
-        youtubePlayer
-    ) {
-
-        youtubePlayer.playVideo();
-
-    }
-
-
-    const conteudo =
-        document.getElementById(
-            "conteudo"
-        );
-
-
-    if (conteudo) {
-
-        conteudo.scrollIntoView({
-
-            behavior: "smooth"
-
-        });
-
-    }
-
-}
-
 
 // ==========================================
 // CONTADOR DO NAMORO
