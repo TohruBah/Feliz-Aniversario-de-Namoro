@@ -1526,3 +1526,209 @@ h2 {
     }
 
 }
+
+/* ==========================================
+   CARTA INTERATIVA
+========================================== */
+
+.carta-container {
+    width: 100%;
+    max-width: 750px;
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+
+
+/* ==========================================
+   BOTÃO DA CARTA
+========================================== */
+
+.botao-carta {
+    width: min(420px, 90%);
+
+    /* Sobrescreve o margin do button global */
+    margin: 0 auto;
+
+    padding: 35px 30px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+
+    border-radius: 28px;
+
+    border:
+        1px solid rgba(244, 127, 164, 0.35);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(232, 92, 137, 0.20),
+            rgba(145, 76, 190, 0.18)
+        );
+
+    backdrop-filter: blur(15px);
+
+    cursor: pointer;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35),
+        0 0 35px rgba(232, 92, 137, 0.08);
+
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+.botao-carta:hover {
+    transform:
+        translateY(-7px)
+        scale(1.03);
+
+    border-color:
+        rgba(244, 127, 164, 0.7);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(232, 92, 137, 0.2);
+}
+
+
+/* ==========================================
+   CONTEÚDO DO BOTÃO
+========================================== */
+
+.icone-envelope {
+    display: block;
+
+    font-size: 65px;
+
+    line-height: 1;
+
+    margin-bottom: 8px;
+
+    animation:
+        envelopeFlutuando
+        2s ease-in-out infinite;
+}
+
+
+.texto-envelope {
+    display: block;
+
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 27px;
+
+    font-weight: 500;
+
+    color: #ffffff;
+}
+
+
+.dica-envelope {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    color: #f48aaa;
+}
+
+
+/* ==========================================
+   CARTA FECHADA
+========================================== */
+
+.carta-container .carta {
+    display: none;
+
+    width: 100%;
+
+    margin: 0 auto;
+}
+
+
+/* ==========================================
+   CARTA ABERTA
+========================================== */
+
+.carta-container.aberta .botao-carta {
+    display: none;
+}
+
+
+.carta-container.aberta .carta {
+    display: block;
+
+    animation:
+        abrirCartaAnimacao
+        0.9s cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+/* ==========================================
+   ANIMAÇÕES
+========================================== */
+
+@keyframes abrirCartaAnimacao {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(45px)
+            scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+
+@keyframes envelopeFlutuando {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-2deg);
+    }
+
+    50% {
+        transform:
+            translateY(-8px)
+            rotate(2deg);
+    }
+
+}

@@ -468,51 +468,39 @@ function mostrarCasal(card) {
 // CORAÇÃO AO CLICAR NA TELA
 // ==========================================
 
-document.addEventListener(
-    "click",
-    function (event) {
+document.addEventListener("click", function (event) {
 
-        // Cria o coração
+    const coracao = document.createElement("span");
 
-        const coracao =
-            document.createElement("span");
+    coracao.classList.add("coracao-clique");
+    coracao.innerHTML = "❤";
 
+    coracao.style.left = event.clientX + "px";
+    coracao.style.top = event.clientY + "px";
 
-        coracao.classList.add(
-            "coracao-clique"
-        );
+    document.body.appendChild(coracao);
 
+    setTimeout(function () {
+        coracao.remove();
+    }, 1200);
 
-        coracao.innerHTML =
-            "❤";
-
-
-        // Posição do clique
-
-        coracao.style.left =
-            event.clientX + "px";
-
-        coracao.style.top =
-            event.clientY + "px";
+});
 
 
-        // Coloca na página
+// ==========================================
+// ABRIR CARTA
+// ==========================================
 
-        document.body.appendChild(
-            coracao
-        );
+function abrirCarta() {
 
+    const container = document.getElementById("cartaContainer");
 
-        // Remove depois da animação
-
-        setTimeout(
-            function () {
-
-                coracao.remove();
-
-            },
-            1200
-        );
-
+    if (!container) {
+        console.error("cartaContainer não foi encontrado.");
+        return;
     }
-);
+
+    container.classList.add("aberta");
+
+}
+
