@@ -2,37 +2,32 @@
 // CONFIGURAÇÕES DA MÚSICA LOCAL
 // ==========================================
 
-const MUSICA_PRINCIPAL =
-    "sons/Musica principal.mp3";
+const MUSICA_PRINCIPAL = "sons/Musica principal.mp3";
 
-const audioPrincipal =
-    new Audio(MUSICA_PRINCIPAL);
+const audioMusica = new Audio(MUSICA_PRINCIPAL);
 
-audioPrincipal.preload = "auto";
-audioPrincipal.loop = true;
-audioPrincipal.volume = 1;
+audioMusica.preload = "auto";
+audioMusica.loop = true;
+audioMusica.volume = 1;
 
-
-// Áudio usado para os Universos
-const audioUniverso =
-    new Audio();
-
-audioUniverso.preload = "auto";
-audioUniverso.loop = true;
-audioUniverso.volume = 1;
-
-
-// Música que está ativa no momento
-let musicaAtual =
-    MUSICA_PRINCIPAL;
-
-
-// Guarda o ponto onde a música principal parou
+let musicaAtual = MUSICA_PRINCIPAL;
 let tempoMusicaPrincipal = 0;
-
-
-// Controla as animações de fade
 let transicaoMusical = 0;
+
+
+// ==========================================
+// ATUALIZA BOTÃO AUTOMATICAMENTE
+// ==========================================
+
+audioMusica.addEventListener(
+    "play",
+    atualizarBotaoMusica
+);
+
+audioMusica.addEventListener(
+    "pause",
+    atualizarBotaoMusica
+);
 
 
 // ==========================================
@@ -41,64 +36,29 @@ let transicaoMusical = 0;
 
 function alternarMusica() {
 
-    // Se algum Universo estiver tocando
-    if (
-        musicaAtual !==
-        MUSICA_PRINCIPAL
-    ) {
+    if (audioMusica.paused) {
 
-        if (audioUniverso.paused) {
+        audioMusica
+            .play()
+            .catch(function (erro) {
 
-            audioUniverso
-                .play()
-                .catch(function (erro) {
+                console.log(
+                    "Não foi possível tocar a música:",
+                    erro
+                );
 
-                    console.log(
-                        "Não foi possível tocar a música:",
-                        erro
-                    );
+            });
 
-                });
+    } else {
 
-        } else {
-
-            audioUniverso.pause();
-
-        }
+        audioMusica.pause();
 
     }
-
-    // Música principal
-    else {
-
-        if (audioPrincipal.paused) {
-
-            audioPrincipal
-                .play()
-                .catch(function (erro) {
-
-                    console.log(
-                        "Não foi possível tocar a música principal:",
-                        erro
-                    );
-
-                });
-
-        } else {
-
-            audioPrincipal.pause();
-
-        }
-
-    }
-
-
-    atualizarBotaoMusica();
 }
 
 
 // ==========================================
-// ATUALIZAR BOTÃO DE MÚSICA
+// ATUALIZAR BOTÃO
 // ==========================================
 
 function atualizarBotaoMusica() {
@@ -128,26 +88,7 @@ function atualizarBotaoMusica() {
     }
 
 
-    let estaTocando = false;
-
-
-    if (
-        musicaAtual ===
-        MUSICA_PRINCIPAL
-    ) {
-
-        estaTocando =
-            !audioPrincipal.paused;
-
-    } else {
-
-        estaTocando =
-            !audioUniverso.paused;
-
-    }
-
-
-    if (estaTocando) {
+    if (!audioMusica.paused) {
 
         botao.classList.add(
             "tocando"
@@ -157,7 +98,8 @@ function atualizarBotaoMusica() {
             "pausado"
         );
 
-        icone.textContent = "🎵";
+        icone.textContent =
+            "🎵";
 
         texto.textContent =
             "Pausar";
@@ -172,7 +114,8 @@ function atualizarBotaoMusica() {
             "pausado"
         );
 
-        icone.textContent = "🔇";
+        icone.textContent =
+            "🔇";
 
         texto.textContent =
             "Música";
@@ -182,11 +125,10 @@ function atualizarBotaoMusica() {
 
 
 // ==========================================
-// FADE DE ÁUDIO
+// FADE ENTRE AS MÚSICAS
 // ==========================================
 
 function alterarVolumeSuavemente(
-    audio,
     volumeInicial,
     volumeFinal,
     duracao,
@@ -198,9 +140,7 @@ function alterarVolumeSuavemente(
         performance.now();
 
 
-    function animar(
-        tempoAtual
-    ) {
+    function animar(tempoAtual) {
 
         if (
             idTransicao !==
@@ -212,10 +152,7 @@ function alterarVolumeSuavemente(
 
         const progresso =
             Math.min(
-                (
-                    tempoAtual -
-                    inicio
-                ) /
+                (tempoAtual - inicio) /
                 duracao,
                 1
             );
@@ -230,7 +167,7 @@ function alterarVolumeSuavemente(
             progresso;
 
 
-        audio.volume =
+        audioMusica.volume =
             Math.max(
                 0,
                 Math.min(
@@ -240,21 +177,18 @@ function alterarVolumeSuavemente(
             );
 
 
-        if (
-            progresso < 1
-        ) {
+        if (progresso < 1) {
 
             requestAnimationFrame(
                 animar
             );
 
-        } else if (
-            callback
-        ) {
+        } else if (callback) {
 
             callback();
 
         }
+
     }
 
 
@@ -265,11 +199,12 @@ function alterarVolumeSuavemente(
 
 
 // ==========================================
-// TOCAR MÚSICA DO UNIVERSO
+// TROCAR MÚSICA SUAVEMENTE
 // ==========================================
 
-function tocarMusicaCasal(
-    caminho
+function trocarMusicaSuavemente(
+    caminho,
+    inicio = 0
 ) {
 
     if (!caminho) {
@@ -282,21 +217,18 @@ function tocarMusicaCasal(
     const minhaTransicao =
         transicaoMusical;
 
-
-    // Guarda o ponto atual da música principal
-    if (
-        musicaAtual ===
-        MUSICA_PRINCIPAL
-    ) {
-
-        tempoMusicaPrincipal =
-            audioPrincipal.currentTime ||
-            0;
-
-    }
+    const volumeAtual =
+        audioMusica.volume;
 
 
-    const iniciarUniverso =
+    // Abaixa a música atual
+    alterarVolumeSuavemente(
+
+        volumeAtual,
+        0,
+        650,
+        minhaTransicao,
+
         function () {
 
             if (
@@ -307,94 +239,89 @@ function tocarMusicaCasal(
             }
 
 
-            audioPrincipal.pause();
-
-            audioUniverso.pause();
-
-
-            audioUniverso.src =
-                caminho;
-
-            audioUniverso.currentTime =
-                0;
-
-            audioUniverso.volume =
-                0;
+            // Para a música antiga
+            audioMusica.pause();
 
 
-            musicaAtual =
+            // Troca o arquivo
+            audioMusica.src =
                 caminho;
 
 
-            audioUniverso
+            // Define de onde começa
+            audioMusica.currentTime =
+                inicio || 0;
+
+
+            audioMusica.loop =
+                true;
+
+
+            audioMusica.volume =
+                0;
+
+
+            // Começa a nova música
+            audioMusica
                 .play()
-                .then(
-                    function () {
+                .then(function () {
 
-                        alterarVolumeSuavemente(
-                            audioUniverso,
-                            0,
-                            1,
-                            900,
-                            minhaTransicao
-                        );
+                    // Aumenta o volume suavemente
+                    alterarVolumeSuavemente(
+                        0,
+                        1,
+                        900,
+                        minhaTransicao
+                    );
 
-                        atualizarBotaoMusica();
+                })
+                .catch(function (erro) {
 
-                    }
-                )
-                .catch(
-                    function (erro) {
+                    console.log(
+                        "Não foi possível tocar a música:",
+                        erro
+                    );
 
-                        console.log(
-                            "Não foi possível tocar a música do Universo:",
-                            erro
-                        );
+                });
 
-                    }
-                );
-        };
+        }
+
+    );
+}
 
 
-    // Se a principal estiver tocando,
-    // faz fade antes da troca
+// ==========================================
+// TOCAR MÚSICA DE UM UNIVERSO / CARD
+// ==========================================
+
+function tocarMusicaCasal(caminho) {
+
+    if (!caminho) {
+        return;
+    }
+
+
+    // Se estamos saindo da música principal,
+    // guarda onde ela estava.
     if (
-        !audioPrincipal.paused
+        musicaAtual ===
+        MUSICA_PRINCIPAL
     ) {
 
-        alterarVolumeSuavemente(
-            audioPrincipal,
-            audioPrincipal.volume,
-            0,
-            650,
-            minhaTransicao,
-            iniciarUniverso
-        );
+        tempoMusicaPrincipal =
+            audioMusica.currentTime || 0;
 
     }
 
-    // Se já existe música de Universo,
-    // faz fade antes de trocar
-    else if (
-        !audioUniverso.paused
-    ) {
 
-        alterarVolumeSuavemente(
-            audioUniverso,
-            audioUniverso.volume,
-            0,
-            650,
-            minhaTransicao,
-            iniciarUniverso
-        );
+    musicaAtual =
+        caminho;
 
-    }
 
-    else {
-
-        iniciarUniverso();
-
-    }
+    trocarMusicaSuavemente(
+        caminho,
+        0
+    );
 }
 
 
@@ -412,118 +339,15 @@ function voltarMusicaPrincipal() {
     }
 
 
-    transicaoMusical++;
-
-    const minhaTransicao =
-        transicaoMusical;
+    musicaAtual =
+        MUSICA_PRINCIPAL;
 
 
-    const voltar =
-        function () {
-
-            if (
-                minhaTransicao !==
-                transicaoMusical
-            ) {
-                return;
-            }
-
-
-            audioUniverso.pause();
-
-            audioUniverso.removeAttribute(
-                "src"
-            );
-
-            audioUniverso.load();
-
-
-            musicaAtual =
-                MUSICA_PRINCIPAL;
-
-
-            audioPrincipal.currentTime =
-                tempoMusicaPrincipal ||
-                0;
-
-            audioPrincipal.volume =
-                0;
-
-
-            audioPrincipal
-                .play()
-                .then(
-                    function () {
-
-                        alterarVolumeSuavemente(
-                            audioPrincipal,
-                            0,
-                            1,
-                            900,
-                            minhaTransicao
-                        );
-
-                        atualizarBotaoMusica();
-
-                    }
-                )
-                .catch(
-                    function (erro) {
-
-                        console.log(
-                            "Não foi possível voltar para a música principal:",
-                            erro
-                        );
-
-                    }
-                );
-        };
-
-
-    if (
-        !audioUniverso.paused
-    ) {
-
-        alterarVolumeSuavemente(
-            audioUniverso,
-            audioUniverso.volume,
-            0,
-            650,
-            minhaTransicao,
-            voltar
-        );
-
-    } else {
-
-        voltar();
-
-    }
+    trocarMusicaSuavemente(
+        MUSICA_PRINCIPAL,
+        tempoMusicaPrincipal || 0
+    );
 }
-
-
-// ==========================================
-// ATUALIZA BOTÃO QUANDO O ÁUDIO MUDA
-// ==========================================
-
-audioPrincipal.addEventListener(
-    "play",
-    atualizarBotaoMusica
-);
-
-audioPrincipal.addEventListener(
-    "pause",
-    atualizarBotaoMusica
-);
-
-audioUniverso.addEventListener(
-    "play",
-    atualizarBotaoMusica
-);
-
-audioUniverso.addEventListener(
-    "pause",
-    atualizarBotaoMusica
-);
 
 
 // ==========================================
@@ -532,30 +356,42 @@ audioUniverso.addEventListener(
 
 function abrirSite() {
 
+    // Garante que estamos usando
+    // a música principal.
     if (
-        audioPrincipal.paused
+        musicaAtual !==
+        MUSICA_PRINCIPAL
     ) {
 
-        audioPrincipal
-            .play()
-            .catch(
-                function (erro) {
+        musicaAtual =
+            MUSICA_PRINCIPAL;
 
-                    console.log(
-                        "Não foi possível iniciar a música:",
-                        erro
-                    );
+        audioMusica.src =
+            MUSICA_PRINCIPAL;
 
-                }
-            );
+        audioMusica.currentTime =
+            tempoMusicaPrincipal || 0;
+
     }
 
 
-    musicaAtual =
-        MUSICA_PRINCIPAL;
+    audioMusica.volume =
+        1;
 
 
-    atualizarBotaoMusica();
+    // Como abrirSite() acontece após
+    // um clique do usuário, o navegador
+    // permite iniciar o áudio.
+    audioMusica
+        .play()
+        .catch(function (erro) {
+
+            console.log(
+                "Não foi possível iniciar a música principal:",
+                erro
+            );
+
+        });
 
 
     const conteudo =
@@ -567,10 +403,47 @@ function abrirSite() {
     if (conteudo) {
 
         conteudo.scrollIntoView({
-            behavior: "smooth"
+
+            behavior:
+                "smooth"
+
         });
 
     }
+}
+
+// ==========================================
+// BOTÃO "NOSSA HISTORINHA"
+// ==========================================
+
+function abrirSite() {
+
+    if (
+        playerPronto &&
+        youtubePlayer
+    ) {
+
+        youtubePlayer.playVideo();
+
+    }
+
+
+    const conteudo =
+        document.getElementById(
+            "conteudo"
+        );
+
+
+    if (conteudo) {
+
+        conteudo.scrollIntoView({
+
+            behavior: "smooth"
+
+        });
+
+    }
+
 }
 
 
@@ -1948,225 +1821,25 @@ document.querySelectorAll(".universo").forEach(
 );
 
 // ==========================================
-// ÁUDIO LOCAL DAS SURPRESINHAS
+// ÁUDIO DAS SURPRESINHAS
 // ==========================================
 
-const audioSurpresinha = new Audio();
-
-audioSurpresinha.volume = 0;
-
-let transicaoSurpresinha = 0;
-
-
-// ==========================================
-// FADE DO ÁUDIO LOCAL
-// ==========================================
-
-function alterarVolumeSurpresinha(
-    volumeInicial,
-    volumeFinal,
-    duracao,
-    idTransicao,
-    callback
-) {
-
-    const inicio = performance.now();
-
-    function animar(tempoAtual) {
-
-        if (idTransicao !== transicaoSurpresinha) {
-            return;
-        }
-
-        const progresso = Math.min(
-            (tempoAtual - inicio) / duracao,
-            1
-        );
-
-        const volume =
-            volumeInicial +
-            (volumeFinal - volumeInicial) *
-            progresso;
-
-        audioSurpresinha.volume = Math.max(
-            0,
-            Math.min(1, volume)
-        );
-
-        if (progresso < 1) {
-
-            requestAnimationFrame(animar);
-
-        } else if (callback) {
-
-            callback();
-
-        }
-    }
-
-    requestAnimationFrame(animar);
-}
-
-
-// ==========================================
-// TOCAR MÚSICA DA SURPRESINHA
-// ==========================================
+// Agora as Surpresinhas usam
+// o mesmo sistema de áudio dos Universos.
 
 function tocarMusicaSurpresinha(caminho) {
 
-    if (!caminho) {
-        return;
-    }
-
-    transicaoSurpresinha++;
-
-    const minhaTransicao =
-        transicaoSurpresinha;
-
-
-    // Guarda o ponto atual do YouTube
-    // antes de pausar.
-
-    if (
-        playerPronto &&
-        youtubePlayer
-    ) {
-
-        try {
-
-            if (
-                videoAtual ===
-                VIDEO_PRINCIPAL
-            ) {
-
-                tempoMusicaPrincipal =
-                    youtubePlayer.getCurrentTime();
-            }
-
-            youtubePlayer.pauseVideo();
-
-        } catch (erro) {
-
-            console.log(
-                "Não foi possível pausar o YouTube:",
-                erro
-            );
-        }
-    }
-
-
-    // Se já existe um MP3 tocando,
-    // diminui o volume antes de trocar.
-
-    const volumeAtual =
-        audioSurpresinha.volume;
-
-    alterarVolumeSurpresinha(
-        volumeAtual,
-        0,
-        500,
-        minhaTransicao,
-
-        function () {
-
-            if (
-                minhaTransicao !==
-                transicaoSurpresinha
-            ) {
-                return;
-            }
-
-            audioSurpresinha.pause();
-
-            audioSurpresinha.src =
-                caminho;
-
-            audioSurpresinha.currentTime =
-                0;
-
-            audioSurpresinha.volume =
-                0;
-
-            audioSurpresinha.play()
-                .then(function () {
-
-                    alterarVolumeSurpresinha(
-                        0,
-                        1,
-                        800,
-                        minhaTransicao
-                    );
-
-                })
-                .catch(function (erro) {
-
-                    console.log(
-                        "Não foi possível tocar a música:",
-                        erro
-                    );
-
-                });
-        }
+    tocarMusicaCasal(
+        caminho
     );
+
 }
 
 
-// ==========================================
-// PARAR MÚSICA DA SURPRESINHA
-// ==========================================
-
 function pararMusicaSurpresinha() {
 
-    transicaoSurpresinha++;
+    voltarMusicaPrincipal();
 
-    const minhaTransicao =
-        transicaoSurpresinha;
-
-    const volumeAtual =
-        audioSurpresinha.volume;
-
-    alterarVolumeSurpresinha(
-        volumeAtual,
-        0,
-        500,
-        minhaTransicao,
-
-        function () {
-
-            audioSurpresinha.pause();
-
-            audioSurpresinha.currentTime =
-                0;
-
-            audioSurpresinha.removeAttribute(
-                "src"
-            );
-
-            audioSurpresinha.load();
-
-
-            // Retoma o YouTube.
-
-            if (
-                playerPronto &&
-                youtubePlayer
-            ) {
-
-                try {
-
-                    youtubePlayer.playVideo();
-
-                } catch (erro) {
-
-                    console.log(
-                        "Não foi possível retomar o YouTube:",
-                        erro
-                    );
-
-                }
-            }
-        }
-    );
 }
 
 // ==========================================
@@ -2249,13 +1922,8 @@ function mostrarSurpresa(card) {
 
 
     // Se já estiver ampliado,
-    // clicar novamente fecha.
-
-    if (
-        card.classList.contains(
-            "ampliado"
-        )
-    ) {
+    // clicar nele novamente fecha.
+    if (card.classList.contains("ampliado")) {
 
         fecharSurpresaAmpliada();
 
@@ -2263,12 +1931,9 @@ function mostrarSurpresa(card) {
     }
 
 
-    // Fecha qualquer outro card aberto.
-
+    // Fecha qualquer outro card aberto
     document
-        .querySelectorAll(
-            ".surpresa-card.aberto"
-        )
+        .querySelectorAll(".surpresa-card.aberto")
         .forEach(function (outroCard) {
 
             outroCard.classList.remove(
@@ -2279,23 +1944,16 @@ function mostrarSurpresa(card) {
         });
 
 
-    // Abre o card escolhido.
-
+    // Abre o card escolhido
     card.classList.add(
         "aberto",
         "ampliado"
     );
 
-
-    // Ativa as setas.
-
-    mostrarBotoesNavegacao(
-        "surpresinha"
-    );
+    mostrarBotoesNavegacao("surpresinha");
 
 
-    // Cria o fundo escuro.
-
+    // Cria o fundo escuro
     let overlay =
         document.querySelector(
             ".surpresa-overlay"
@@ -2315,48 +1973,53 @@ function mostrarSurpresa(card) {
         );
 
 
+        // Clicar fora fecha o card
         overlay.addEventListener(
             "click",
             fecharSurpresaAmpliada
         );
+
     }
 
 
-    requestAnimationFrame(
-        function () {
+    // Mostra o fundo
+    requestAnimationFrame(function () {
 
-            overlay.classList.add(
-                "ativo"
-            );
+        overlay.classList.add(
+            "ativo"
+        );
 
-        }
-    );
+    });
 
 
+    // Bloqueia scroll
     document.body.classList.add(
         "surpresa-aberta"
     );
 
 
-    // Música MP3 do card.
-
+    // Música do card
     const musica =
         card.dataset.musica;
 
 
-    if (musica) {
+    if (
+        musica &&
+    typeof tocarMusicaSurpresinha === "function"
+) {
 
-        tocarMusicaSurpresinha(
-            musica
-        );
+    tocarMusicaSurpresinha(
+        musica
+    );
 
     }
+
 }
 
 
 
 // ==========================================
-// FECHAR CARD AMPLIADO DA SURPRESINHA
+// FECHAR CARD AMPLIADO
 // ==========================================
 
 function fecharSurpresaAmpliada() {
@@ -2396,13 +2059,12 @@ function fecharSurpresaAmpliada() {
         "surpresa-aberta"
     );
 
-
     esconderBotoesNavegacao();
 
+    // Volta suavemente para
+    // a música principal
+    voltarMusicaPrincipal();
 
-    // Para o MP3 e volta ao YouTube.
-
-    pararMusicaSurpresinha();
 }
 
 // ==========================================
