@@ -1741,4 +1741,144 @@ document.querySelectorAll(".universo").forEach(
         observadorCards.observe(card);
 
     }
+
+    
+
 );
+
+// ==========================================
+// SURPRESINHA
+// ==========================================
+
+function abrirSurpresinha() {
+
+    const conteudo =
+        document.getElementById(
+            "surpresinhaConteudo"
+        );
+
+    const botao =
+        document.getElementById(
+            "botaoSurpresinha"
+        );
+
+
+    if (!conteudo) {
+        return;
+    }
+
+
+    const estaAberta =
+        conteudo.classList.contains(
+            "aberta"
+        );
+
+
+    // FECHAR SURPRESA
+    if (estaAberta) {
+
+        conteudo.classList.remove(
+            "aberta"
+        );
+
+        if (botao) {
+            botao.innerHTML =
+                "🎁 Surpresinha hehe";
+        }
+
+        return;
+    }
+
+
+    // ABRIR SURPRESA
+    conteudo.classList.add(
+        "aberta"
+    );
+
+
+    if (botao) {
+        botao.innerHTML =
+            "🎁 Esconder surpresinha";
+    }
+
+
+    setTimeout(function () {
+
+        conteudo.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }, 150);
+}
+
+
+
+// ==========================================
+// ABRIR CARD DA SURPRESA
+// ==========================================
+
+function mostrarSurpresa(card) {
+
+    if (!card) {
+        return;
+    }
+
+
+    const estavaAberto =
+        card.classList.contains(
+            "aberto"
+        );
+
+
+    // Fecha todos os outros cards
+    document
+        .querySelectorAll(
+            ".surpresa-card.aberto"
+        )
+        .forEach(function (outroCard) {
+
+            outroCard.classList.remove(
+                "aberto"
+            );
+
+        });
+
+
+    // Se clicou no card que já estava
+    // aberto, apenas fecha.
+    if (estavaAberto) {
+        return;
+    }
+
+
+    // Abre o card escolhido
+    card.classList.add(
+        "aberto"
+    );
+
+
+    // Pega a música
+    const musica =
+        card.dataset.musica;
+
+
+    if (!musica) {
+        return;
+    }
+
+
+    // Usa o mesmo sistema de música
+    // utilizado pelos cards dos universos.
+    if (
+        typeof tocarMusicaCasal
+        === "function"
+    ) {
+
+        tocarMusicaCasal(
+            musica
+        );
+
+    }
+
+}
