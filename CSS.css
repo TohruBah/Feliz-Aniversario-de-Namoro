@@ -834,19 +834,19 @@ h2 {
 
 .particulas::before,
 .particulas::after {
-    content: "✦   ✧   ·   ✦   ·   ✧";
+    content: "♡   ♥   ♡   ♥   ♡   ♥";
 
     position: fixed;
 
     z-index: 10;
 
-    color: rgba(255,255,255,0.15);
+    color: rgba(244, 127, 164, 0.3);
 
-    font-size: 18px;
+    font-size: 26px;
 
     pointer-events: none;
 
-    animation: flutuar 15s linear infinite;
+    animation: flutuar 9s linear infinite;
 }
 
 .particulas::before {
@@ -855,8 +855,7 @@ h2 {
 
 .particulas::after {
     right: 5%;
-
-    animation-delay: 5s;
+    animation-delay: 2.5s;
 }
 
 
@@ -1428,6 +1427,102 @@ h2 {
 
     .casal img {
         height: 320px;
+    }
+
+}
+
+/* ==========================================
+   CORAÇÃO AO CLICAR
+========================================== */
+
+.coracao-clique {
+
+    position: fixed;
+
+    transform: translate(-50%, -50%);
+
+    font-size: 28px;
+
+    color: #f47fa4;
+
+    pointer-events: none;
+
+    z-index: 99999;
+
+    text-shadow:
+        0 0 10px rgba(244, 127, 164, 0.7),
+        0 0 20px rgba(244, 127, 164, 0.4);
+
+    animation:
+        coracaoClique 1.2s ease-out forwards;
+}
+
+
+/* Animação */
+
+@keyframes coracaoClique {
+
+    0% {
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.5);
+    }
+
+    30% {
+        transform:
+            translate(-50%, -70%)
+            scale(1.3);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate(-50%, -160%)
+            scale(1);
+    }
+
+}
+
+.nomes-casal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    text-align: center;
+}
+
+.nomes-casal .nome {
+    color: white;
+
+    margin: 0;
+
+    filter: none;
+}
+
+.nomes-casal .coracao-nomes {
+    font-size: 55px;
+
+    margin: -5px 0;
+
+    line-height: 1;
+
+    animation: pulsarCoracaoNomes 1.5s ease-in-out infinite;
+}
+
+@keyframes pulsarCoracaoNomes {
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
     }
 
 }

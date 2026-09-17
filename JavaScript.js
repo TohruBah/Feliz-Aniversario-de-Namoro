@@ -1,20 +1,18 @@
 // ==========================================
-// CONFIGURAÇÃO
+// SISTEMA DE MÚSICA - YOUTUBE
 // ==========================================
 
+const VIDEO_PRINCIPAL = "Af3uIsqu3pw";
+
+let youtubePlayer = null;
+let musicaAtual = VIDEO_PRINCIPAL;
+let tempoMusicaPrincipal = 0;
 let musicaTocando = false;
 
 
 // ==========================================
-// PLAYER DO YOUTUBE
+// CRIA O PLAYER DO YOUTUBE
 // ==========================================
-
-// Esta função é chamada automaticamente
-// quando a API do YouTube termina de carregar.
-
-const VIDEO_ID = "Af3uIsqu3pw";
-
-let youtubePlayer = null;
 
 function onYouTubeIframeAPIReady() {
 
@@ -23,61 +21,40 @@ function onYouTubeIframeAPIReady() {
         width: "320",
         height: "200",
 
-        videoId: VIDEO_ID,
+        videoId: VIDEO_PRINCIPAL,
 
         playerVars: {
+
             autoplay: 0,
-            controls: 1,
+            controls: 0,
+
             loop: 1,
-            playlist: VIDEO_ID
+            playlist: VIDEO_PRINCIPAL,
+
+            playsinline: 1
         },
 
         events: {
 
             onReady: function () {
-                console.log("YouTube carregado corretamente!");
+
+                atualizarBotaoMusica();
+
             },
 
             onStateChange: function (event) {
 
-                const botao =
-                    document.getElementById("botaoMusica");
+                musicaTocando =
+                    event.data === YT.PlayerState.PLAYING;
 
-                const icone =
-                    document.getElementById("iconeMusica");
-
-                const texto =
-                    document.getElementById("textoMusica");
-
-                if (event.data === YT.PlayerState.PLAYING) {
-
-                    botao.classList.add("tocando");
-
-                    icone.textContent = "⏸️";
-                    texto.textContent = "Pausar música";
-
-                }
-
-                if (event.data === YT.PlayerState.PAUSED) {
-
-                    botao.classList.remove("tocando");
-
-                    icone.textContent = "▶️";
-                    texto.textContent = "Tocar música";
-
-                }
+                atualizarBotaoMusica();
 
             },
 
             onError: function (event) {
 
                 console.error(
-                    "ERRO DO YOUTUBE:",
-                    event.data
-                );
-
-                alert(
-                    "O YouTube não conseguiu reproduzir o vídeo. Código: " +
+                    "Erro do YouTube:",
                     event.data
                 );
 
@@ -90,14 +67,17 @@ function onYouTubeIframeAPIReady() {
 }
 
 
+// ==========================================
+// TOCAR / PAUSAR MÚSICA
+// ==========================================
+
 function alternarMusica() {
 
-    if (!youtubePlayer) {
-
-        alert("O player ainda está carregando.");
-
+    if (
+        !youtubePlayer ||
+        typeof youtubePlayer.getPlayerState !== "function"
+    ) {
         return;
-
     }
 
 
@@ -120,59 +100,8 @@ function alternarMusica() {
 }
 
 
-function abrirSite() {
-
-    if (youtubePlayer) {
-
-        youtubePlayer.playVideo();
-
-    }
-
-
-    document
-        .getElementById("conteudo")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
-
-}
-
 // ==========================================
-// TOCAR / PAUSAR
-// ==========================================
-
-function alternarMusica() {
-
-    if (
-        !youtubePlayer ||
-        typeof youtubePlayer.getPlayerState !== "function"
-    ) {
-
-        console.log("Player ainda está carregando...");
-        return;
-
-    }
-
-    const estado = youtubePlayer.getPlayerState();
-
-
-    if (estado === YT.PlayerState.PLAYING) {
-
-        youtubePlayer.pauseVideo();
-
-    }
-
-    else {
-
-        youtubePlayer.playVideo();
-
-    }
-
-}
-
-
-// ==========================================
-// ATUALIZAR BOTÃO
+// ATUALIZAR BOTÃO DE MÚSICA
 // ==========================================
 
 function atualizarBotaoMusica() {
@@ -198,7 +127,19 @@ function atualizarBotaoMusica() {
         botao.classList.remove("pausado");
 
         icone.textContent = "🎵";
-        texto.textContent = "Tocando";
+
+
+        if (musicaAtual === VIDEO_PRINCIPAL) {
+
+            texto.textContent = "Tocando";
+
+        }
+
+        else {
+
+            texto.textContent = "Música do casal";
+
+        }
 
     }
 
@@ -208,6 +149,7 @@ function atualizarBotaoMusica() {
         botao.classList.add("pausado");
 
         icone.textContent = "🔇";
+
         texto.textContent = "Música";
 
     }
@@ -216,12 +158,93 @@ function atualizarBotaoMusica() {
 
 
 // ==========================================
-// BOTÃO "NOSSA HISTÓRIA"
+// TOCAR MÚSICA DO CASAL
+// ==========================================
+
+function tocarMusicaCasal(videoId) {
+
+    if (
+        !youtubePlayer ||
+        typeof youtubePlayer.loadVideoById !== "function"
+    ) {
+        return;
+    }
+
+
+    // Guarda onde a música principal estava
+
+    if (
+        musicaAtual === VIDEO_PRINCIPAL &&
+        typeof youtubePlayer.getCurrentTime === "function"
+    ) {
+
+        tempoMusicaPrincipal =
+            youtubePlayer.getCurrentTime() || 0;
+
+    }
+
+
+    // Define a música do casal
+
+    musicaAtual = videoId;
+
+
+    // Começa a música do casal do início
+
+    youtubePlayer.loadVideoById({
+
+        videoId: videoId,
+
+        startSeconds: 0
+
+    });
+
+}
+
+
+// ==========================================
+// VOLTAR PARA A MÚSICA PRINCIPAL
+// ==========================================
+
+function voltarMusicaPrincipal() {
+
+    if (
+        !youtubePlayer ||
+        typeof youtubePlayer.loadVideoById !== "function"
+    ) {
+        return;
+    }
+
+
+    if (musicaAtual === VIDEO_PRINCIPAL) {
+        return;
+    }
+
+
+    musicaAtual = VIDEO_PRINCIPAL;
+
+
+    // Volta exatamente de onde a música estava
+
+    youtubePlayer.loadVideoById({
+
+        videoId: VIDEO_PRINCIPAL,
+
+        startSeconds:
+            tempoMusicaPrincipal || 0
+
+    });
+
+}
+
+
+// ==========================================
+// BOTÃO "NOSSA HISTÓRINHA"
 // ==========================================
 
 function abrirSite() {
 
-    // Inicia a música através do clique do usuário
+    // Começa a música principal
 
     if (
         youtubePlayer &&
@@ -233,7 +256,7 @@ function abrirSite() {
     }
 
 
-    // Desce para o conteúdo
+    // Desce suavemente para o conteúdo
 
     const conteudo =
         document.getElementById("conteudo");
@@ -242,8 +265,11 @@ function abrirSite() {
     if (conteudo) {
 
         conteudo.scrollIntoView({
+
             behavior: "smooth",
+
             block: "start"
+
         });
 
     }
@@ -255,18 +281,8 @@ function abrirSite() {
 // CONTADOR DO RELACIONAMENTO
 // ==========================================
 
-// IMPORTANTE:
-// Troque esta data pela data em que vocês começaram
-// a namorar.
-//
-// Formato:
-// ano, mês - 1, dia, hora, minuto
-//
-// Janeiro = 0
-// Fevereiro = 1
-// Março = 2
-// ...
-// Dezembro = 11
+// Data de início:
+// 18/01/2026
 
 const inicioNamoro =
     new Date(2026, 0, 18, 0, 0, 0);
@@ -274,25 +290,34 @@ const inicioNamoro =
 
 function atualizarContador() {
 
-    const agora = new Date();
+    const agora =
+        new Date();
+
 
     let diferenca =
-        agora.getTime() - inicioNamoro.getTime();
+        agora.getTime() -
+        inicioNamoro.getTime();
 
 
     // Evita números negativos
 
     if (diferenca < 0) {
+
         diferenca = 0;
+
     }
 
 
     const segundosTotais =
-        Math.floor(diferenca / 1000);
+        Math.floor(
+            diferenca / 1000
+        );
 
 
     const dias =
-        Math.floor(segundosTotais / 86400);
+        Math.floor(
+            segundosTotais / 86400
+        );
 
 
     const horas =
@@ -311,6 +336,8 @@ function atualizarContador() {
         segundosTotais % 60;
 
 
+    // Pega os elementos do HTML
+
     const elementoDias =
         document.getElementById("dias");
 
@@ -324,29 +351,52 @@ function atualizarContador() {
         document.getElementById("segundos");
 
 
+    // Atualiza os valores
+
     if (elementoDias) {
-        elementoDias.textContent = dias;
+
+        elementoDias.textContent =
+            dias;
+
     }
+
 
     if (elementoHoras) {
+
         elementoHoras.textContent =
-            String(horas).padStart(2, "0");
+            String(horas).padStart(
+                2,
+                "0"
+            );
+
     }
+
 
     if (elementoMinutos) {
+
         elementoMinutos.textContent =
-            String(minutos).padStart(2, "0");
+            String(minutos).padStart(
+                2,
+                "0"
+            );
+
     }
 
+
     if (elementoSegundos) {
+
         elementoSegundos.textContent =
-            String(segundos).padStart(2, "0");
+            String(segundos).padStart(
+                2,
+                "0"
+            );
+
     }
 
 }
 
 
-// Atualiza imediatamente
+// Atualiza assim que a página abre
 
 atualizarContador();
 
@@ -358,8 +408,9 @@ setInterval(
     1000
 );
 
+
 // ==========================================
-// CASAIS DOS UNIVERSOS
+// CASAIS DOS UNIVERSOS + MÚSICAS
 // ==========================================
 
 function mostrarCasal(card) {
@@ -368,7 +419,8 @@ function mostrarCasal(card) {
         card.classList.contains("aberto");
 
 
-    // Fecha todos os cards
+    // Fecha todos os outros cards
+
     document
         .querySelectorAll(".universo")
         .forEach(function (universo) {
@@ -378,11 +430,89 @@ function mostrarCasal(card) {
         });
 
 
-    // Se estava fechado, abre
-    if (!estavaAberto) {
+    // Se clicou no casal que já estava aberto,
+    // fecha e volta para a música principal
 
-        card.classList.add("aberto");
+    if (estavaAberto) {
+
+        voltarMusicaPrincipal();
+
+        return;
+
+    }
+
+
+    // Abre o casal selecionado
+
+    card.classList.add("aberto");
+
+
+    // Pega a música configurada no HTML
+
+    const musicaId =
+        card.dataset.musica;
+
+
+    if (musicaId) {
+
+        tocarMusicaCasal(
+            musicaId
+        );
 
     }
 
 }
+
+
+// ==========================================
+// CORAÇÃO AO CLICAR NA TELA
+// ==========================================
+
+document.addEventListener(
+    "click",
+    function (event) {
+
+        // Cria o coração
+
+        const coracao =
+            document.createElement("span");
+
+
+        coracao.classList.add(
+            "coracao-clique"
+        );
+
+
+        coracao.innerHTML =
+            "❤";
+
+
+        // Posição do clique
+
+        coracao.style.left =
+            event.clientX + "px";
+
+        coracao.style.top =
+            event.clientY + "px";
+
+
+        // Coloca na página
+
+        document.body.appendChild(
+            coracao
+        );
+
+
+        // Remove depois da animação
+
+        setTimeout(
+            function () {
+
+                coracao.remove();
+
+            },
+            1200
+        );
+
+    }
+);
