@@ -1840,3 +1840,410 @@ h2 {
     .ramo-direito .f6 { right: 15px; }
 }
 
+
+
+/* ==================================================
+   JARDIM ROMÂNTICO DO FUNDO DO SITE
+   Vinhas, raízes, corações e flores
+================================================== */
+
+.jardim-site {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.vinha-site {
+    position: absolute;
+    bottom: -4vh;
+    width: 105px;
+    height: 108vh;
+    opacity: 0;
+    /* Crescimento por recorte, sem transformar a vinha inteira. */
+    clip-path: inset(100% 0 0 0);
+}
+
+.vinha-site-esquerda {
+    left: 18px;
+    border-left: 3px solid rgba(216, 117, 148, 0.28);
+    border-radius: 55% 0 0 35%;
+}
+
+.vinha-site-direita {
+    right: 18px;
+    border-right: 3px solid rgba(216, 117, 148, 0.28);
+    border-radius: 0 55% 35% 0;
+}
+
+.vinha-site::before,
+.vinha-site::after {
+    content: "";
+    position: absolute;
+    width: 75px;
+    height: 190px;
+    border-radius: 50%;
+    opacity: 0.45;
+}
+
+.vinha-site-esquerda::before {
+    left: -2px;
+    top: 18%;
+    border-top: 2px solid rgba(189, 85, 117, 0.38);
+    transform: rotate(25deg);
+}
+
+.vinha-site-esquerda::after {
+    left: 0;
+    top: 58%;
+    border-top: 2px solid rgba(189, 85, 117, 0.38);
+    transform: rotate(-24deg);
+}
+
+.vinha-site-direita::before {
+    right: -2px;
+    top: 27%;
+    border-top: 2px solid rgba(189, 85, 117, 0.38);
+    transform: rotate(-25deg);
+}
+
+.vinha-site-direita::after {
+    right: 0;
+    top: 66%;
+    border-top: 2px solid rgba(189, 85, 117, 0.38);
+    transform: rotate(24deg);
+}
+
+.broto-site {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    color: rgba(244, 127, 164, 0.62);
+    font-size: 22px;
+    line-height: 1;
+    opacity: 0;
+    scale: 0;
+    text-shadow: 0 0 14px rgba(244, 127, 164, 0.22);
+}
+
+.flor-site {
+    color: rgba(232, 165, 185, 0.68);
+    font-size: 27px;
+}
+
+.vinha-site-esquerda .b1 { bottom: 8%;  left: 5px; }
+.vinha-site-esquerda .b2 { bottom: 20%; left: 38px; }
+.vinha-site-esquerda .b3 { bottom: 33%; left: 4px; }
+.vinha-site-esquerda .b4 { bottom: 46%; left: 42px; }
+.vinha-site-esquerda .b5 { bottom: 59%; left: 3px; }
+.vinha-site-esquerda .b6 { bottom: 71%; left: 38px; }
+.vinha-site-esquerda .b7 { bottom: 83%; left: 5px; }
+.vinha-site-esquerda .b8 { bottom: 94%; left: 35px; }
+
+.vinha-site-direita .b1 { bottom: 10%; right: 5px; }
+.vinha-site-direita .b2 { bottom: 23%; right: 38px; }
+.vinha-site-direita .b3 { bottom: 36%; right: 4px; }
+.vinha-site-direita .b4 { bottom: 49%; right: 42px; }
+.vinha-site-direita .b5 { bottom: 62%; right: 3px; }
+.vinha-site-direita .b6 { bottom: 74%; right: 38px; }
+.vinha-site-direita .b7 { bottom: 86%; right: 5px; }
+.vinha-site-direita .b8 { bottom: 95%; right: 35px; }
+
+.raizes-site {
+    position: absolute;
+    bottom: 0;
+    width: 46vw;
+    height: 80px;
+    opacity: 0;
+    scale: 0.25;
+    transform-origin: bottom center;
+}
+
+.raizes-site-esquerda {
+    left: 0;
+    border-bottom: 2px solid rgba(189, 85, 117, 0.28);
+    border-radius: 0 0 80% 30%;
+}
+
+.raizes-site-direita {
+    right: 0;
+    border-bottom: 2px solid rgba(189, 85, 117, 0.28);
+    border-radius: 0 0 30% 80%;
+}
+
+.raizes-site::before,
+.raizes-site::after {
+    content: "";
+    position: absolute;
+    bottom: 8px;
+    width: 48%;
+    height: 35px;
+    border-bottom: 1px solid rgba(216, 117, 148, 0.28);
+    border-radius: 50%;
+}
+
+.raizes-site::before { left: 12%; transform: rotate(5deg); }
+.raizes-site::after  { right: 5%; transform: rotate(-7deg); }
+
+body.jardim-ativo .vinha-site-esquerda {
+    animation: crescerVinhaSite 2.8s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+}
+
+body.jardim-ativo .vinha-site-direita {
+    animation: crescerVinhaSite 2.8s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+}
+
+body.jardim-ativo .raizes-site {
+    animation: crescerRaizSite 1.7s ease 0.1s forwards;
+}
+
+body.jardim-ativo .broto-site {
+    /* O elemento externo só nasce uma vez.
+       Nenhuma animação contínua é aplicada nele. */
+    animation: nascerBrotoSite 0.55s ease forwards;
+}
+
+/* Sincronização dos detalhes com o crescimento da vinha.
+   Cada coração/flor nasce logo depois que a vinha alcança sua posição. */
+body.jardim-ativo .vinha-site-esquerda .b1 { animation-delay: 0.55s; }
+body.jardim-ativo .vinha-site-esquerda .b2 { animation-delay: 0.85s; }
+body.jardim-ativo .vinha-site-esquerda .b3 { animation-delay: 1.20s; }
+body.jardim-ativo .vinha-site-esquerda .b4 { animation-delay: 1.55s; }
+body.jardim-ativo .vinha-site-esquerda .b5 { animation-delay: 1.90s; }
+body.jardim-ativo .vinha-site-esquerda .b6 { animation-delay: 2.25s; }
+body.jardim-ativo .vinha-site-esquerda .b7 { animation-delay: 2.60s; }
+body.jardim-ativo .vinha-site-esquerda .b8 { animation-delay: 2.95s; }
+
+body.jardim-ativo .vinha-site-direita .b1 { animation-delay: 0.85s; }
+body.jardim-ativo .vinha-site-direita .b2 { animation-delay: 1.15s; }
+body.jardim-ativo .vinha-site-direita .b3 { animation-delay: 1.50s; }
+body.jardim-ativo .vinha-site-direita .b4 { animation-delay: 1.85s; }
+body.jardim-ativo .vinha-site-direita .b5 { animation-delay: 2.20s; }
+body.jardim-ativo .vinha-site-direita .b6 { animation-delay: 2.55s; }
+body.jardim-ativo .vinha-site-direita .b7 { animation-delay: 2.90s; }
+body.jardim-ativo .vinha-site-direita .b8 { animation-delay: 3.25s; }
+
+@keyframes crescerVinhaSite {
+    0% {
+        opacity: 0;
+        clip-path: inset(100% 0 0 0);
+    }
+
+    10% {
+        opacity: 1;
+        clip-path: inset(94% 0 0 0);
+    }
+
+    100% {
+        opacity: 1;
+        clip-path: inset(0% 0 0 0);
+    }
+}
+
+@keyframes crescerRaizSite {
+    0%   { opacity: 0; scale: 0.25; }
+    100% { opacity: 1; scale: 1; }
+}
+
+@keyframes nascerBrotoSite {
+    0%   { opacity: 0; scale: 0; }
+    65%  { opacity: 1; scale: 1.25; }
+    100% { opacity: 1; scale: 1; }
+}
+
+/* ==================================================
+   MOVIMENTO SUAVE SEM TREMOR
+   O pai (.broto-site) cuida do nascimento.
+   O filho interno cuida apenas do movimento contínuo.
+================================================== */
+
+.movimento-coracao,
+.movimento-flor {
+    display: inline-block;
+    transform-origin: center;
+}
+
+/* Corações: pulsação bem leve */
+.movimento-coracao {
+    animation: coracaoRespirandoSite 4.6s ease-in-out infinite;
+}
+
+/* Flores: efeito de vida sem movimentar pixels */
+.movimento-flor {
+    animation: brilhoFlorSite 5.4s ease-in-out infinite;
+}
+
+@keyframes coracaoRespirandoSite {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+@keyframes brilhoFlorSite {
+    0%, 100% {
+        opacity: 0.72;
+        text-shadow: 0 0 8px rgba(232, 165, 185, 0.20);
+    }
+
+    50% {
+        opacity: 1;
+        text-shadow:
+            0 0 12px rgba(232, 165, 185, 0.38),
+            0 0 20px rgba(244, 127, 164, 0.16);
+    }
+}
+
+
+@media (max-width: 750px) {
+    .vinha-site { width: 62px; }
+    .vinha-site-esquerda { left: 3px; }
+    .vinha-site-direita { right: 3px; }
+    .broto-site { font-size: 15px; }
+    .flor-site { font-size: 19px; }
+    .vinha-site-esquerda .b2,
+    .vinha-site-esquerda .b4,
+    .vinha-site-esquerda .b6,
+    .vinha-site-esquerda .b8 { left: 20px; }
+    .vinha-site-direita .b2,
+    .vinha-site-direita .b4,
+    .vinha-site-direita .b6,
+    .vinha-site-direita .b8 { right: 20px; }
+    .raizes-site { width: 50vw; height: 55px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.jardim-ativo .vinha-site,
+    body.jardim-ativo .raizes-site,
+    body.jardim-ativo .broto-site,
+    .movimento-coracao,
+    .movimento-flor {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0s !important;
+    }
+}
+
+
+/* ==================================================
+   EFEITOS ROMÂNTICOS ADICIONAIS
+================================================== */
+
+/* O fundo usa cores reais atualizadas pelo JavaScript. */
+body {
+    --fundo-roxo: #291c52;
+    --fundo-rosa: #411c45;
+    --fundo-base: #080812;
+    background:
+        radial-gradient(circle at 20% 10%, var(--fundo-roxo) 0%, transparent 32%),
+        radial-gradient(circle at 80% 40%, var(--fundo-rosa) 0%, transparent 32%),
+        var(--fundo-base);
+    transition: background 0.35s linear;
+}
+
+/* Corações cadentes: acima do fundo e abaixo das interações. */
+.coracoes-cadentes {
+    position: fixed;
+    inset: 0;
+    z-index: 15;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.coracao-cadente {
+    position: absolute;
+    top: -45px;
+    color: rgba(244, 127, 164, 0.42);
+    font-size: var(--tamanho, 17px);
+    line-height: 1;
+    opacity: 0;
+    text-shadow: 0 0 10px rgba(244, 127, 164, 0.22);
+    animation: cairCoracaoCadente var(--duracao, 8s) linear forwards;
+}
+
+@keyframes cairCoracaoCadente {
+    0% { opacity: 0; transform: translate3d(0,-30px,0) rotate(0deg); }
+    12% { opacity: .65; }
+    82% { opacity: .42; }
+    100% { opacity: 0; transform: translate3d(var(--desvio,80px),110vh,0) rotate(var(--giro,220deg)); }
+}
+
+/* Pequenos corações no caminho do mouse. */
+.coracao-mouse {
+    position: fixed;
+    z-index: 9998;
+    pointer-events: none;
+    color: rgba(244,127,164,.72);
+    font-size: 12px;
+    line-height: 1;
+    animation: sumirCoracaoMouse .9s ease-out forwards;
+}
+
+@keyframes sumirCoracaoMouse {
+    0% { opacity: 0; transform: translate(-50%,-50%) scale(.55); }
+    20% { opacity: .8; }
+    100% { opacity: 0; transform: translate(-50%,-30px) scale(1.15); }
+}
+
+/* Pétalas da carta. */
+.petalas-carta-camada {
+    position: fixed;
+    inset: 0;
+    z-index: 9997;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.petala-carta-solta {
+    position: fixed;
+    width: 10px;
+    height: 15px;
+    border-radius: 75% 25% 70% 30%;
+    background: rgba(244,138,170,.82);
+    box-shadow: 0 0 8px rgba(244,127,164,.2);
+    opacity: 0;
+    animation: petalaSaindoCarta var(--duracao-petala,3.5s) ease-in forwards;
+}
+
+@keyframes petalaSaindoCarta {
+    0% { opacity: 0; transform: translate3d(0,0,0) rotate(0deg); }
+    12% { opacity: .95; }
+    100% { opacity: 0; transform: translate3d(var(--desvio-petala,30px),52vh,0) rotate(var(--giro-petala,300deg)); }
+}
+
+/* Texto da carta aparece em sequência. */
+.carta-container.aberta .carta > .carta-decoracao,
+.carta-container.aberta .carta > .categoria,
+.carta-container.aberta .carta > h2,
+.carta-container.aberta .carta > p {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: revelarTrechoCarta .7s ease forwards;
+}
+.carta-container.aberta .carta > .carta-decoracao { animation-delay: .25s; }
+.carta-container.aberta .carta > .categoria { animation-delay: .45s; }
+.carta-container.aberta .carta > h2 { animation-delay: .70s; }
+.carta-container.aberta .carta > p:nth-of-type(2) { animation-delay: 1.05s; }
+.carta-container.aberta .carta > p:nth-of-type(3) { animation-delay: 1.40s; }
+.carta-container.aberta .carta > p:nth-of-type(4) { animation-delay: 1.75s; }
+.carta-container.aberta .carta > p:nth-of-type(5) { animation-delay: 2.10s; }
+.carta-container.aberta .carta > p:nth-of-type(6) { animation-delay: 2.45s; }
+.carta-container.aberta .carta > p:nth-of-type(7) { animation-delay: 2.80s; }
+
+@keyframes revelarTrechoCarta {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .coracao-cadente, .coracao-mouse, .petala-carta-solta,
+    .carta-container.aberta .carta > .carta-decoracao,
+    .carta-container.aberta .carta > .categoria,
+    .carta-container.aberta .carta > h2,
+    .carta-container.aberta .carta > p {
+        animation-duration: .01ms !important;
+        animation-delay: 0s !important;
+    }
+}

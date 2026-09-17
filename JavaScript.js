@@ -1,25 +1,28 @@
 // ==========================================
-// SISTEMA DE MÚSICA - YOUTUBE
+// CONFIGURAÇÕES DA MÚSICA
 // ==========================================
 
 const VIDEO_PRINCIPAL = "Af3uIsqu3pw";
 
-let youtubePlayer = null;
-let musicaAtual = VIDEO_PRINCIPAL;
+let youtubePlayer;
+let playerPronto = false;
+
+let videoAtual = VIDEO_PRINCIPAL;
 let tempoMusicaPrincipal = 0;
-let musicaTocando = false;
+
+let transicaoMusical = 0;
 
 
 // ==========================================
-// CRIA O PLAYER DO YOUTUBE
+// API DO YOUTUBE
 // ==========================================
 
 function onYouTubeIframeAPIReady() {
 
     youtubePlayer = new YT.Player("youtubePlayer", {
 
-        width: "320",
         height: "200",
+        width: "200",
 
         videoId: VIDEO_PRINCIPAL,
 
@@ -27,36 +30,32 @@ function onYouTubeIframeAPIReady() {
 
             autoplay: 0,
             controls: 0,
+            disablekb: 1,
+            fs: 0,
+            modestbranding: 1,
+            rel: 0,
+            playsinline: 1,
 
             loop: 1,
-            playlist: VIDEO_PRINCIPAL,
+            playlist: VIDEO_PRINCIPAL
 
-            playsinline: 1
         },
 
         events: {
 
             onReady: function () {
 
-                atualizarBotaoMusica();
+                playerPronto = true;
 
-            },
-
-            onStateChange: function (event) {
-
-                musicaTocando =
-                    event.data === YT.PlayerState.PLAYING;
+                youtubePlayer.setVolume(100);
 
                 atualizarBotaoMusica();
 
             },
 
-            onError: function (event) {
+            onStateChange: function () {
 
-                console.error(
-                    "Erro do YouTube:",
-                    event.data
-                );
+                atualizarBotaoMusica();
 
             }
 
@@ -68,20 +67,14 @@ function onYouTubeIframeAPIReady() {
 
 
 // ==========================================
-// TOCAR / PAUSAR MÚSICA
+// BOTÃO DE MÚSICA
 // ==========================================
 
 function alternarMusica() {
 
-    if (
-        !youtubePlayer ||
-        typeof youtubePlayer.getPlayerState !== "function"
-    ) {
-
+    if (!playerPronto || !youtubePlayer) {
         return;
-
     }
-
 
     const estado =
         youtubePlayer.getPlayerState();
@@ -91,9 +84,7 @@ function alternarMusica() {
 
         youtubePlayer.pauseVideo();
 
-    }
-
-    else {
+    } else {
 
         youtubePlayer.playVideo();
 
@@ -118,45 +109,232 @@ function atualizarBotaoMusica() {
         document.getElementById("textoMusica");
 
 
-    if (!botao || !icone || !texto) {
-
+    if (
+        !botao ||
+        !icone ||
+        !texto ||
+        !playerPronto ||
+        !youtubePlayer
+    ) {
         return;
-
     }
 
 
-    if (musicaTocando) {
+    const estado =
+        youtubePlayer.getPlayerState();
+
+
+    if (estado === YT.PlayerState.PLAYING) {
 
         botao.classList.add("tocando");
         botao.classList.remove("pausado");
 
         icone.textContent = "🎵";
+        texto.textContent = "Pausar";
 
-
-        if (musicaAtual === VIDEO_PRINCIPAL) {
-
-            texto.textContent = "Tocando";
-
-        }
-
-        else {
-
-            texto.textContent = "Música do casal";
-
-        }
-
-    }
-
-    else {
+    } else {
 
         botao.classList.remove("tocando");
         botao.classList.add("pausado");
 
         icone.textContent = "🔇";
-
         texto.textContent = "Música";
 
     }
+
+}
+
+
+// ==========================================
+// TRANSIÇÃO SUAVE ENTRE MÚSICAS
+// ==========================================
+
+function alterarVolumeSuavemente(
+    volumeInicial,
+    volumeFinal,
+    duracao,
+    idTransicao,
+    callback
+) {
+
+    const inicio =
+        performance.now();
+
+
+    function animar(tempoAtual) {
+
+        /*
+            Se outra música tiver sido
+            selecionada durante a animação,
+            cancela a transição anterior.
+        */
+
+        if (idTransicao !== transicaoMusical) {
+            return;
+        }
+
+
+        const progresso =
+            Math.min(
+                (tempoAtual - inicio) / duracao,
+                1
+            );
+
+
+        const volume =
+            volumeInicial +
+            (volumeFinal - volumeInicial) *
+            progresso;
+
+
+        try {
+
+            youtubePlayer.setVolume(
+                Math.round(volume)
+            );
+
+        } catch (erro) {
+
+            return;
+
+        }
+
+
+        if (progresso < 1) {
+
+            requestAnimationFrame(animar);
+
+        } else if (callback) {
+
+            callback();
+
+        }
+
+    }
+
+
+    requestAnimationFrame(animar);
+
+}
+
+
+// ==========================================
+// TROCAR MÚSICA COM FADE
+// ==========================================
+
+function trocarMusicaSuavemente(
+    videoId,
+    inicio = 0
+) {
+
+    if (!playerPronto || !youtubePlayer) {
+        return;
+    }
+
+
+    /*
+        Cria um identificador novo.
+
+        Isso impede que duas transições
+        aconteçam ao mesmo tempo.
+    */
+
+    transicaoMusical++;
+
+    const minhaTransicao =
+        transicaoMusical;
+
+
+    let volumeAtual = 100;
+
+
+    try {
+
+        volumeAtual =
+            youtubePlayer.getVolume();
+
+    } catch (erro) {
+
+        volumeAtual = 100;
+
+    }
+
+
+    // Diminui a música atual.
+
+    alterarVolumeSuavemente(
+
+        volumeAtual,
+        0,
+        650,
+        minhaTransicao,
+
+        function () {
+
+            if (
+                minhaTransicao !==
+                transicaoMusical
+            ) {
+                return;
+            }
+
+
+            /*
+                Troca o vídeo somente
+                quando o volume chegou
+                praticamente a zero.
+            */
+
+            youtubePlayer.loadVideoById({
+
+                videoId: videoId,
+
+                startSeconds:
+                    inicio || 0
+
+            });
+
+
+            youtubePlayer.setVolume(0);
+
+
+            /*
+                Pequeno intervalo para
+                o novo vídeo carregar.
+            */
+
+            setTimeout(
+
+                function () {
+
+                    if (
+                        minhaTransicao !==
+                        transicaoMusical
+                    ) {
+                        return;
+                    }
+
+
+                    // Aumenta o volume novamente.
+
+                    alterarVolumeSuavemente(
+
+                        0,
+                        100,
+                        900,
+                        minhaTransicao
+
+                    );
+
+                },
+
+                180
+
+            );
+
+        }
+
+    );
 
 }
 
@@ -168,97 +346,96 @@ function atualizarBotaoMusica() {
 function tocarMusicaCasal(videoId) {
 
     if (
+        !playerPronto ||
         !youtubePlayer ||
-        typeof youtubePlayer.loadVideoById !== "function"
+        !videoId
     ) {
-
         return;
-
     }
 
 
-    // Guarda onde a música principal estava
+    /*
+        Guarda o momento da música
+        principal antes de trocar.
+    */
 
     if (
-        musicaAtual === VIDEO_PRINCIPAL &&
-        typeof youtubePlayer.getCurrentTime === "function"
+        videoAtual ===
+        VIDEO_PRINCIPAL
     ) {
 
-        tempoMusicaPrincipal =
-            youtubePlayer.getCurrentTime() || 0;
+        try {
+
+            tempoMusicaPrincipal =
+                youtubePlayer.getCurrentTime();
+
+        } catch (erro) {
+
+            tempoMusicaPrincipal = 0;
+
+        }
 
     }
 
 
-    // Define a música do casal
+    videoAtual =
+        videoId;
 
-    musicaAtual = videoId;
 
-
-    // Começa a música do casal do início
-
-    youtubePlayer.loadVideoById({
-
-        videoId: videoId,
-
-        startSeconds: 0
-
-    });
+    trocarMusicaSuavemente(
+        videoId,
+        0
+    );
 
 }
 
 
 // ==========================================
-// VOLTAR PARA A MÚSICA PRINCIPAL
+// VOLTAR PARA MÚSICA PRINCIPAL
 // ==========================================
 
 function voltarMusicaPrincipal() {
 
     if (
-        !youtubePlayer ||
-        typeof youtubePlayer.loadVideoById !== "function"
+        !playerPronto ||
+        !youtubePlayer
     ) {
-
         return;
-
     }
 
 
-    if (musicaAtual === VIDEO_PRINCIPAL) {
-
+    if (
+        videoAtual ===
+        VIDEO_PRINCIPAL
+    ) {
         return;
-
     }
 
 
-    musicaAtual = VIDEO_PRINCIPAL;
+    videoAtual =
+        VIDEO_PRINCIPAL;
 
 
-    // Volta exatamente de onde a música estava
+    trocarMusicaSuavemente(
 
-    youtubePlayer.loadVideoById({
+        VIDEO_PRINCIPAL,
 
-        videoId: VIDEO_PRINCIPAL,
+        tempoMusicaPrincipal || 0
 
-        startSeconds:
-            tempoMusicaPrincipal || 0
-
-    });
+    );
 
 }
 
 
 // ==========================================
-// BOTÃO "NOSSA HISTÓRINHA"
+// BOTÃO "NOSSA HISTORINHA"
 // ==========================================
 
 function abrirSite() {
 
-    // Começa a música principal
-
     if (
-        youtubePlayer &&
-        typeof youtubePlayer.playVideo === "function"
+        playerPronto &&
+        youtubePlayer
     ) {
 
         youtubePlayer.playVideo();
@@ -266,19 +443,17 @@ function abrirSite() {
     }
 
 
-    // Desce suavemente para o conteúdo
-
     const conteudo =
-        document.getElementById("conteudo");
+        document.getElementById(
+            "conteudo"
+        );
 
 
     if (conteudo) {
 
         conteudo.scrollIntoView({
 
-            behavior: "smooth",
-
-            block: "start"
+            behavior: "smooth"
 
         });
 
@@ -288,14 +463,18 @@ function abrirSite() {
 
 
 // ==========================================
-// CONTADOR DO RELACIONAMENTO
+// CONTADOR DO NAMORO
 // ==========================================
 
-// Data de início:
-// 18/01/2026
-
-const inicioNamoro =
-    new Date(2026, 0, 18, 0, 0, 0);
+const dataInicioNamoro =
+    new Date(
+        2026,
+        0,
+        18,
+        0,
+        0,
+        0
+    );
 
 
 function atualizarContador() {
@@ -305,48 +484,52 @@ function atualizarContador() {
 
 
     let diferenca =
-        agora.getTime() -
-        inicioNamoro.getTime();
+        agora - dataInicioNamoro;
 
-
-    // Evita números negativos
 
     if (diferenca < 0) {
-
         diferenca = 0;
-
     }
 
 
-    const segundosTotais =
-        Math.floor(
-            diferenca / 1000
-        );
+    const segundo = 1000;
+
+    const minuto =
+        segundo * 60;
+
+    const hora =
+        minuto * 60;
+
+    const dia =
+        hora * 24;
 
 
     const dias =
         Math.floor(
-            segundosTotais / 86400
+            diferenca / dia
         );
 
 
     const horas =
         Math.floor(
-            (segundosTotais % 86400) / 3600
+            (diferenca % dia) /
+            hora
         );
 
 
     const minutos =
         Math.floor(
-            (segundosTotais % 3600) / 60
+            (diferenca % hora) /
+            minuto
         );
 
 
     const segundos =
-        segundosTotais % 60;
+        Math.floor(
+            (diferenca % minuto) /
+            segundo
+        );
 
-
-    // Pega os elementos do HTML
 
     const elementoDias =
         document.getElementById("dias");
@@ -360,8 +543,6 @@ function atualizarContador() {
     const elementoSegundos =
         document.getElementById("segundos");
 
-
-    // Atualiza os valores
 
     if (elementoDias) {
 
@@ -406,12 +587,8 @@ function atualizarContador() {
 }
 
 
-// Atualiza assim que a página abre
-
 atualizarContador();
 
-
-// Atualiza a cada segundo
 
 setInterval(
     atualizarContador,
@@ -420,28 +597,46 @@ setInterval(
 
 
 // ==========================================
-// CASAIS DOS UNIVERSOS + MÚSICAS
+// CASAIS DOS UNIVERSOS
 // ==========================================
 
 function mostrarCasal(card) {
 
+    if (!card) {
+        return;
+    }
+
+
     const estavaAberto =
-        card.classList.contains("aberto");
+        card.classList.contains(
+            "aberto"
+        );
 
 
-    // Fecha todos os outros cards
-
-    document
-        .querySelectorAll(".universo")
-        .forEach(function (universo) {
-
-            universo.classList.remove("aberto");
-
-        });
+    const todosCards =
+        document.querySelectorAll(
+            ".universo"
+        );
 
 
-    // Se clicou no casal que já estava aberto,
-    // fecha e volta para a música principal
+    todosCards.forEach(
+
+        function (outroCard) {
+
+            outroCard.classList.remove(
+                "aberto"
+            );
+
+        }
+
+    );
+
+
+    /*
+        Se clicar novamente no casal
+        que já estava aberto:
+        fecha e volta para a música principal.
+    */
 
     if (estavaAberto) {
 
@@ -452,21 +647,19 @@ function mostrarCasal(card) {
     }
 
 
-    // Abre o casal selecionado
+    card.classList.add(
+        "aberto"
+    );
 
-    card.classList.add("aberto");
 
-
-    // Pega a música configurada no HTML
-
-    const musicaId =
+    const musica =
         card.dataset.musica;
 
 
-    if (musicaId) {
+    if (musica) {
 
         tocarMusicaCasal(
-            musicaId
+            musica
         );
 
     }
@@ -475,56 +668,119 @@ function mostrarCasal(card) {
 
 
 // ==========================================
-// CORAÇÃO AO CLICAR NA TELA
+// CORAÇÃO AO CLICAR
 // ==========================================
 
 document.addEventListener(
-    "click",
-    function (event) {
 
-        // Cria o coração
+    "click",
+
+    function (evento) {
+
+        /*
+            Não cria coração sobre
+            botões ou cards.
+        */
+
+        if (
+            evento.target.closest("button") ||
+            evento.target.closest(".universo")
+        ) {
+            return;
+        }
+
 
         const coracao =
-            document.createElement("span");
+            document.createElement(
+                "span"
+            );
 
 
-        coracao.classList.add(
-            "coracao-clique"
-        );
-
-
-        coracao.innerHTML =
+        coracao.textContent =
             "❤";
 
 
-        // Posição do clique
+        coracao.style.position =
+            "fixed";
+
 
         coracao.style.left =
-            event.clientX + "px";
+            evento.clientX + "px";
+
 
         coracao.style.top =
-            event.clientY + "px";
+            evento.clientY + "px";
 
 
-        // Coloca o coração na página
+        coracao.style.pointerEvents =
+            "none";
+
+
+        coracao.style.zIndex =
+            "9999";
+
+
+        coracao.style.color =
+            "#f47fa4";
+
+
+        coracao.style.fontSize =
+            "18px";
+
+
+        coracao.style.opacity =
+            "1";
+
+
+        coracao.style.transform =
+            "translate(-50%, -50%) scale(1)";
+
+
+        coracao.style.transition =
+            "all 1s ease";
+
 
         document.body.appendChild(
             coracao
         );
 
 
-        // Remove depois da animação
+        requestAnimationFrame(
+
+            function () {
+
+                coracao.style.top =
+                    evento.clientY -
+                    60 +
+                    "px";
+
+
+                coracao.style.opacity =
+                    "0";
+
+
+                coracao.style.transform =
+                    "translate(-50%, -50%) scale(1.5)";
+
+            }
+
+        );
+
 
         setTimeout(
+
             function () {
 
                 coracao.remove();
 
             },
-            1200
+
+            1000
+
         );
 
     }
+
 );
 
 
@@ -541,27 +797,788 @@ function abrirCarta() {
 
 
     if (!container) {
-
-        console.error(
-            "cartaContainer não foi encontrado."
-        );
-
         return;
-
     }
 
 
-    // Adiciona a classe que abre a carta.
-    // O CSS usa essa mesma classe para iniciar:
-    //
-    // - abertura da carta
-    // - crescimento das raízes
-    // - crescimento das vinhas
-    // - nascimento dos corações
-    // - nascimento das flores
+    const jaEstavaAberta =
+        container.classList.contains(
+            "aberta"
+        );
+
 
     container.classList.add(
         "aberta"
     );
 
+
+    /*
+        As pétalas aparecem apenas
+        na primeira abertura.
+    */
+
+    if (!jaEstavaAberta) {
+
+        setTimeout(
+
+            soltarPetalasDaCarta,
+
+            250
+
+        );
+
+    }
+
 }
+
+
+// ==========================================
+// JARDIM ROMÂNTICO DO SITE
+// ==========================================
+
+function iniciarJardimDoSite() {
+
+    /*
+        Remove e adiciona a classe
+        em frames separados.
+
+        Isso garante que o navegador
+        realmente execute a animação
+        inicial das vinhas.
+    */
+
+    document.body.classList.remove(
+        "jardim-ativo"
+    );
+
+
+    requestAnimationFrame(
+
+        function () {
+
+            requestAnimationFrame(
+
+                function () {
+
+                    document.body.classList.add(
+                        "jardim-ativo"
+                    );
+
+                }
+
+            );
+
+        }
+
+    );
+
+}
+
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+
+        "DOMContentLoaded",
+
+        iniciarJardimDoSite
+
+    );
+
+} else {
+
+    iniciarJardimDoSite();
+
+}
+
+
+// ==========================================
+// 1. CORAÇÕES CADENTES OCASIONAIS
+// ==========================================
+
+function criarCoracaoCadente() {
+
+    const camada =
+        document.getElementById(
+            "coracoesCadentes"
+        );
+
+
+    if (
+        !camada ||
+        document.hidden
+    ) {
+        return;
+    }
+
+
+    const coracao =
+        document.createElement(
+            "span"
+        );
+
+
+    coracao.className =
+        "coracao-cadente";
+
+
+    /*
+        Corações vazios aparecem
+        com maior frequência porque
+        são mais discretos.
+    */
+
+    coracao.textContent =
+        Math.random() > 0.25
+            ? "♡"
+            : "♥";
+
+
+    /*
+        Começa em uma posição
+        aleatória na parte superior.
+    */
+
+    coracao.style.left =
+        (
+            8 +
+            Math.random() * 84
+        ) +
+        "vw";
+
+
+    coracao.style.setProperty(
+
+        "--tamanho",
+
+        (
+            12 +
+            Math.random() * 9
+        ) +
+        "px"
+
+    );
+
+
+    coracao.style.setProperty(
+
+        "--duracao",
+
+        (
+            6 +
+            Math.random() * 3
+        ) +
+        "s"
+
+    );
+
+
+    coracao.style.setProperty(
+
+        "--desvio",
+
+        (
+            -80 +
+            Math.random() * 160
+        ) +
+        "px"
+
+    );
+
+
+    coracao.style.setProperty(
+
+        "--giro",
+
+        (
+            120 +
+            Math.random() * 300
+        ) +
+        "deg"
+
+    );
+
+
+    camada.appendChild(
+        coracao
+    );
+
+
+    /*
+        Segurança:
+        remove o coração mesmo caso
+        animationend não seja disparado.
+    */
+
+    const remover = function () {
+
+        if (coracao.isConnected) {
+
+            coracao.remove();
+
+        }
+
+    };
+
+
+    coracao.addEventListener(
+        "animationend",
+        remover
+    );
+
+
+    setTimeout(
+        remover,
+        11000
+    );
+
+}
+
+
+// ==========================================
+// AGENDAR CORAÇÕES CADENTES
+// ==========================================
+
+function agendarProximoCoracaoCadente() {
+
+    /*
+        Depois do primeiro teste,
+        os corações aparecem entre
+        aproximadamente 5 e 10 segundos.
+    */
+
+    const espera =
+        5000 +
+        Math.random() * 5000;
+
+
+    setTimeout(
+
+        function () {
+
+            criarCoracaoCadente();
+
+
+            /*
+                Pequena chance de surgir
+                um segundo coração.
+            */
+
+            if (
+                Math.random() <
+                0.22
+            ) {
+
+                setTimeout(
+
+                    criarCoracaoCadente,
+
+                    700 +
+                    Math.random() * 800
+
+                );
+
+            }
+
+
+            agendarProximoCoracaoCadente();
+
+        },
+
+        espera
+
+    );
+
+}
+
+
+/*
+    Primeiro coração aparece rápido
+    para ser possível perceber que
+    o efeito está funcionando.
+*/
+
+setTimeout(
+    criarCoracaoCadente,
+    1800
+);
+
+
+agendarProximoCoracaoCadente();
+
+
+// ==========================================
+// 2. CORAÇÕES SEGUINDO O MOUSE
+// ==========================================
+
+let ultimoCoracaoMouse = 0;
+
+
+document.addEventListener(
+
+    "pointermove",
+
+    function (evento) {
+
+        /*
+            Não executa em toque.
+    */
+
+        if (
+            evento.pointerType &&
+            evento.pointerType !== "mouse"
+        ) {
+            return;
+        }
+
+
+        const agora =
+            performance.now();
+
+
+        /*
+            Evita criar partículas
+            demais.
+        */
+
+        if (
+            agora -
+            ultimoCoracaoMouse <
+            120
+        ) {
+            return;
+        }
+
+
+        ultimoCoracaoMouse =
+            agora;
+
+
+        /*
+            Nem todo movimento gera
+            um coração.
+        */
+
+        if (
+            Math.random() >
+            0.42
+        ) {
+            return;
+        }
+
+
+        const coracao =
+            document.createElement(
+                "span"
+            );
+
+
+        coracao.className =
+            "coracao-mouse";
+
+
+        coracao.textContent =
+            Math.random() > 0.5
+                ? "♥"
+                : "♡";
+
+
+        /*
+            Pequena variação de posição
+            deixa o efeito mais natural.
+        */
+
+        const variacaoX =
+            -5 +
+            Math.random() * 10;
+
+
+        const variacaoY =
+            -5 +
+            Math.random() * 10;
+
+
+        coracao.style.left =
+            evento.clientX +
+            variacaoX +
+            "px";
+
+
+        coracao.style.top =
+            evento.clientY +
+            variacaoY +
+            "px";
+
+
+        document.body.appendChild(
+            coracao
+        );
+
+
+        const remover = function () {
+
+            if (coracao.isConnected) {
+
+                coracao.remove();
+
+            }
+
+        };
+
+
+        coracao.addEventListener(
+            "animationend",
+            remover
+        );
+
+
+        setTimeout(
+            remover,
+            1300
+        );
+
+    }
+
+);
+
+
+// ==========================================
+// 3. PÉTALAS AO ABRIR A CARTA
+// ==========================================
+
+function soltarPetalasDaCarta() {
+
+    const camada =
+        document.getElementById(
+            "petalasCarta"
+        );
+
+
+    const carta =
+        document.getElementById(
+            "carta"
+        );
+
+
+    if (
+        !camada ||
+        !carta
+    ) {
+        return;
+    }
+
+
+    const retangulo =
+        carta.getBoundingClientRect();
+
+
+    /*
+        Origem aproximada das pétalas:
+        parte superior da carta.
+    */
+
+    const origemY =
+        Math.max(
+            retangulo.top + 30,
+            70
+        );
+
+
+    for (
+        let i = 0;
+        i < 18;
+        i++
+    ) {
+
+        const petala =
+            document.createElement(
+                "span"
+            );
+
+
+        petala.className =
+            "petala-carta-solta";
+
+
+        /*
+            Espalha as pétalas pela
+            região central da carta.
+        */
+
+        const origemX =
+
+            retangulo.left +
+
+            retangulo.width *
+
+            (
+                0.18 +
+                Math.random() * 0.64
+            );
+
+
+        petala.style.left =
+            origemX + "px";
+
+
+        petala.style.top =
+
+            (
+                origemY +
+                Math.random() * 35
+            ) +
+
+            "px";
+
+
+        /*
+            Movimento lateral.
+        */
+
+        petala.style.setProperty(
+
+            "--desvio-petala",
+
+            (
+                -130 +
+                Math.random() * 260
+            ) +
+
+            "px"
+
+        );
+
+
+        /*
+            Rotação.
+        */
+
+        petala.style.setProperty(
+
+            "--giro-petala",
+
+            (
+                200 +
+                Math.random() * 420
+            ) +
+
+            "deg"
+
+        );
+
+
+        /*
+            Cada pétala possui
+            velocidade diferente.
+        */
+
+        petala.style.setProperty(
+
+            "--duracao-petala",
+
+            (
+                3 +
+                Math.random() * 1.8
+            ) +
+
+            "s"
+
+        );
+
+
+        petala.style.animationDelay =
+
+            (
+                Math.random() * 0.75
+            ) +
+
+            "s";
+
+
+        camada.appendChild(
+            petala
+        );
+
+
+        const remover = function () {
+
+            if (petala.isConnected) {
+
+                petala.remove();
+
+            }
+
+        };
+
+
+        petala.addEventListener(
+            "animationend",
+            remover
+        );
+
+
+        setTimeout(
+            remover,
+            6500
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// 6. FUNDO REAGINDO AO SCROLL
+// ==========================================
+
+let scrollPendente = false;
+
+
+function atualizarFundoComScroll() {
+
+    const documento =
+        document.documentElement;
+
+
+    const alturaTotal =
+
+        Math.max(
+
+            documento.scrollHeight -
+            window.innerHeight,
+
+            1
+
+        );
+
+
+    const progresso =
+
+        Math.max(
+
+            0,
+
+            Math.min(
+
+                window.scrollY /
+                alturaTotal,
+
+                1
+
+            )
+
+        );
+
+
+    /*
+        Em vez de usar cálculo dentro
+        do rgba(), calculamos os valores
+        diretamente no JavaScript.
+
+        Isso aumenta a compatibilidade
+        entre navegadores.
+    */
+
+
+    const rosa =
+        0.08 +
+        progresso * 0.16;
+
+
+    const roxo =
+        0.04 +
+        progresso * 0.14;
+
+
+    document.body.style.setProperty(
+
+        "--scroll-rosa",
+
+        rosa.toFixed(3)
+
+    );
+
+
+    document.body.style.setProperty(
+
+        "--scroll-roxo",
+
+        roxo.toFixed(3)
+
+    );
+
+
+    /*
+        Também deixamos uma variável
+        geral disponível caso queira
+        criar mais efeitos depois.
+    */
+
+    document.body.style.setProperty(
+
+        "--progresso-scroll",
+
+        progresso.toFixed(3)
+
+    );
+
+
+    scrollPendente = false;
+
+}
+
+
+// ==========================================
+// DETECTAR SCROLL
+// ==========================================
+
+window.addEventListener(
+
+    "scroll",
+
+    function () {
+
+        if (scrollPendente) {
+            return;
+        }
+
+
+        scrollPendente = true;
+
+
+        requestAnimationFrame(
+            atualizarFundoComScroll
+        );
+
+    },
+
+    {
+        passive: true
+    }
+
+);
+
+
+// ==========================================
+// REDIMENSIONAMENTO DA JANELA
+// ==========================================
+
+window.addEventListener(
+
+    "resize",
+
+    function () {
+
+        atualizarFundoComScroll();
+
+    }
+
+);
+
+
+// Define o fundo inicial.
+
+atualizarFundoComScroll();
