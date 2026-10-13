@@ -3247,3 +3247,205 @@ body.universo-aberto {
 
 }
 
+
+/* ==========================================
+   9 MESES — TEMA NOITE REAL
+========================================== */
+:root {
+    --noite-0: #050816;
+    --noite-1: #09112a;
+    --noite-2: #111b3d;
+    --violeta: #6f4ccf;
+    --violeta-claro: #a98cf4;
+    --ouro: #f2cc73;
+    --ouro-claro: #ffe7a7;
+    --texto-suave: #cbd2e8;
+}
+
+body {
+    background:
+        radial-gradient(circle at 18% 8%, rgba(75, 72, 160, .34), transparent 30%),
+        radial-gradient(circle at 82% 36%, rgba(77, 42, 135, .25), transparent 32%),
+        linear-gradient(160deg, var(--noite-0), var(--noite-1) 48%, #070a19);
+}
+
+body::before {
+    background: radial-gradient(circle at 50% 0%, rgba(242, 204, 115, .10), transparent 38%);
+}
+
+.inicio {
+    background:
+        radial-gradient(circle at 50% 38%, rgba(111, 76, 207, .22), transparent 38%),
+        radial-gradient(circle at 50% 20%, rgba(242, 204, 115, .08), transparent 25%);
+}
+
+.mini-titulo, .categoria { color: var(--ouro); }
+.simbolo { color: var(--ouro-claro); border-color: rgba(242,204,115,.42); box-shadow: 0 0 42px rgba(242,204,115,.18); }
+h1 span, .nome { color: #f6f1ff; filter: drop-shadow(0 0 18px rgba(169,140,244,.42)); }
+.subtitulo, .texto, .final p { color: var(--texto-suave); }
+
+button:not(.botao-musica):not(.botao-fechar-carta), .botao-corrida {
+    border-color: rgba(242,204,115,.45) !important;
+    box-shadow: 0 12px 34px rgba(0,0,0,.24), 0 0 24px rgba(242,204,115,.08);
+}
+
+.motivo-dourado {
+    border-color: rgba(242,204,115,.55) !important;
+    background: linear-gradient(145deg, rgba(242,204,115,.12), rgba(111,76,207,.12)) !important;
+    box-shadow: 0 0 28px rgba(242,204,115,.10);
+}
+.motivo-dourado span { color: var(--ouro) !important; }
+
+.corrida-chamada { padding-top: 30px; padding-bottom: 100px; }
+.corrida-chamada-card {
+    position: relative; overflow: hidden; text-align: center;
+    padding: clamp(38px, 7vw, 70px) clamp(20px, 6vw, 70px);
+    border: 1px solid rgba(242,204,115,.35); border-radius: 30px;
+    background: linear-gradient(145deg, rgba(17,27,61,.9), rgba(44,28,83,.72));
+    box-shadow: 0 24px 70px rgba(0,0,0,.35), inset 0 0 40px rgba(242,204,115,.035);
+}
+.corrida-chamada-card::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 50% 0,rgba(242,204,115,.14),transparent 38%); pointer-events:none; }
+.corrida-emblema { font-size: 54px; color: var(--ouro); margin: 14px 0; filter: drop-shadow(0 0 14px rgba(242,204,115,.35)); }
+.corrida-chamada-card h2 { margin-bottom: 15px; }
+.corrida-chamada-card p:not(.categoria) { max-width: 650px; margin: 0 auto; color: var(--texto-suave); line-height: 1.75; }
+.botao-corrida { display:inline-block; margin-top:28px; padding:15px 26px; border:1px solid var(--ouro); border-radius:999px; color:#0a0d1c; background:linear-gradient(135deg,var(--ouro-claro),var(--ouro)); text-decoration:none; font-weight:800; letter-spacing:.4px; transition:.25s ease; }
+.botao-corrida:hover { transform:translateY(-3px); box-shadow:0 12px 35px rgba(242,204,115,.25); }
+
+@media (max-width: 600px) {
+    .corrida-chamada-card { border-radius: 22px; }
+    .botao-corrida { width: 100%; }
+}
+
+
+/* Fundo romântico — substitui os pequenos pontos por corações discretos */
+body::before{
+  background-image:none!important;
+}
+
+/* Camada de corações repetidos, mantendo o fundo escuro original */
+body::after{
+  content:"♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡ \A";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  overflow:hidden;
+  white-space:pre-wrap;
+  word-spacing:58px;
+  line-height:94px;
+  padding:18px 6px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:8px;
+  font-weight:400;
+  color:rgba(238,190,255,.32);
+  text-shadow:0 0 5px rgba(211,142,255,.18);
+  letter-spacing:52px;
+  background:
+    radial-gradient(circle at 82% 18%,rgba(105,49,140,.09),transparent 32%),
+    radial-gradient(circle at 15% 75%,rgba(255,92,170,.035),transparent 27%);
+}
+
+/* Repete várias linhas sem precisar de imagens externas */
+html{
+  background-color:#090615;
+}
+
+.btn-nosso-amor {
+  display: block;
+  margin: 30px auto;
+  padding: 15px 32px;
+  border: 1px solid #f5a4d6;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #a74387, #6f3b99);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 20px #f56bb555;
+  transition: transform .25s, box-shadow .25s;
+}
+
+.btn-nosso-amor:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 30px #f56bb599;
+}
+
+.amor-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 5, 25, .96);
+}
+
+.amor-modal.ativo {
+  display: flex;
+}
+
+.amor-conteudo {
+  width: 100%;
+  max-width: 650px;
+  text-align: center;
+  color: #ffe5f5;
+}
+
+.amor-conteudo h2 {
+  font-size: clamp(26px, 6vw, 40px);
+  margin-bottom: 20px;
+}
+
+.amor-conteudo h3 {
+  color: #ffb5df;
+  font-size: 26px;
+}
+
+.amor-conteudo p {
+  color: #e8c9e4;
+  line-height: 1.6;
+}
+
+.infinito-coracoes {
+  position: relative;
+  width: min(90vw, 500px);
+  height: min(54vw, 280px);
+  margin: 10px auto 25px;
+}
+
+.coracao-infinito {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 17px;
+  color: #ff77b7;
+  text-shadow: 0 0 12px currentColor;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.amor-fechar {
+  position: absolute;
+  right: 24px;
+  top: 20px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 38px;
+  cursor: pointer;
+}
+
+/* Convite Nosso Futuro: isolado para não afetar outras seções */
+.nosso-futuro-convite{position:relative;isolation:isolate;overflow:hidden;min-height:490px;display:grid;place-items:center;margin:70px auto 30px;padding:75px 22px;background:linear-gradient(90deg,rgba(13,10,27,.90),rgba(19,13,34,.50)),url('imagens/quadro-13.jpg') center/cover no-repeat,#171125;text-align:center;color:#fff7ef;border-top:1px solid rgba(255,222,180,.22);border-bottom:1px solid rgba(255,222,180,.22)}
+.nosso-futuro-convite::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 70% 15%,rgba(255,195,141,.18),transparent 60%)}
+.nosso-futuro-convite__conteudo{max-width:660px;position:relative;z-index:1}
+.nosso-futuro-convite__selo{font-size:.75rem;letter-spacing:.24em;color:#f3cf9f}
+.nosso-futuro-convite h2{font-size:clamp(2.7rem,8vw,5.2rem);line-height:1.1;margin:16px 0 10px;color:#fff7ec;text-shadow:0 4px 20px rgba(0,0,0,.4)}
+.nosso-futuro-convite h2 em{font-weight:400;color:#f7c9d6}
+.nosso-futuro-convite p{color:#fff0e8;font-size:1.1rem;margin:8px 0}
+.nosso-futuro-convite .nosso-futuro-convite__descricao{font-size:1rem;line-height:1.8;max-width:500px;margin:22px auto 28px}
+.nosso-futuro-convite__botao{display:inline-flex;align-items:center;gap:14px;padding:15px 27px;border-radius:40px;background:linear-gradient(120deg,#f8e1c3,#eeb6c8);color:#2e1a29!important;text-decoration:none!important;font-weight:750;box-shadow:0 10px 30px rgba(0,0,0,.28);transition:transform .2s,box-shadow .2s}
+.nosso-futuro-convite__botao:hover,.nosso-futuro-convite__botao:focus-visible{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.36)}
+.nosso-futuro-convite small{display:block;margin-top:20px;color:#e8d9d8;font-size:.75rem}
+@media(max-width:600px){.nosso-futuro-convite{min-height:440px;padding:60px 20px;margin:45px auto 20px}.nosso-futuro-convite__selo{letter-spacing:.13em}}

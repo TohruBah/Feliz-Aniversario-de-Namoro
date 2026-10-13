@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100b25"><title>Tracen Festival • 9 Meses</title>
+<link rel="stylesheet" href="corrida.css">
+</head>
+<body>
+<div class="stars"></div>
+<header class="topbar">
+<a class="back" href="index.html">← Voltar</a>
+<div class="brand"><small>ACADEMIA TRACEN • EVENTO ESPECIAL</small><b>Tracen Festival</b></div>
+<button id="musicBtn" class="round">♪</button>
+</header>
+
+<nav class="festivalNav">
+<button data-page="festival" class="active">Festival</button>
+<button data-page="album">Álbum <span id="albumCount">0/4</span></button>
+<button id="urNav" data-page="ur" disabled>UR 🔒</button><a class="arcadeNav" href="arcade.html">Arcade</a>
+</nav>
+
+<main>
+<section id="festival" class="page active">
+<div class="gameHead">
+<p class="eyebrow">FESTIVAL DOS 9 MESES</p>
+<h1>Jogo da Memória dos Casais</h1>
+<p>Encontre os quatro casais para completar o Álbum do Festival e desbloquear a carta secreta.</p>
+<div class="stats"><span>Jogadas <b id="moves">0</b></span><span>Pares <b id="pairs">0 / 4</b></span><span>Tempo <b id="time">00:00</b></span></div>
+</div>
+<div id="board" class="board"></div>
+<div class="actions"><button id="restart" class="primary">EMBARALHAR E RECOMEÇAR</button></div>
+</section>
+
+<section id="album" class="page">
+<div class="gameHead">
+<p class="eyebrow">TRACEN FESTIVAL COLLECTION</p><h1>Álbum dos Casais</h1>
+<p>Os casais encontrados durante o Festival ficam registrados aqui.</p>
+</div>
+<div class="passport">
+  <div><small>PASSE DO FESTIVAL TRACEN</small><b>Treinadora Maria</b><span id="passportStatus">0 / 4 carimbos</span></div>
+  <div id="stamps" class="stamps"><i>1</i><i>2</i><i>3</i><i>4</i><i class="finalStamp">UR</i></div>
+</div>
+<div id="albumGrid" class="albumGrid"></div>
+<div class="albumProgress"><div><span>COLEÇÃO</span><b id="collectionText">0 / 4</b></div><i><em id="collectionBar"></em></i></div>
+</section>
+
+<section id="ur" class="page urPage">
+<div class="urStage">
+<p class="eyebrow">ULTIMATE RARITY • ANNIVERSARY LIMITED</p>
+<p class="flipHint">Toque na carta para ver o verso</p>
+<div id="urCard" class="urFlip">
+  <div class="urInner">
+    <div class="urCard urFront">
+      <div class="foil"></div><div class="rarity">UR</div><div class="serial">AM-180126-09</div>
+      <div class="urNine">∞</div>
+      <div class="urNames"><small>ANNIVERSARY PAIR</small><h2>Alexandre<br><span>×</span> Maria</h2><p>18.01.2026 — ∞</p></div>
+      <div class="attributes">
+       <span>CARINHO <b>S+</b></span><span>CONFIANÇA <b>S+</b></span><span>COMPANHEIRISMO <b>S+</b></span><span>MEMÓRIAS <b>S</b></span><span>FUTURO <b>∞</b></span><span>GERAL <b>UR</b></span>
+      </div>
+      <button id="skillBtn" class="skill skillButton"><small>SKILL EXCLUSIVA</small><b>“Sempre ao seu lado” • Lv.∞</b><p>Toque para ativar</p></button>
+    </div>
+    <div class="urCard urBack">
+      <div class="rarity">UR</div><div class="serial">MENSAGEM ESPECIAL</div>
+      <div class="letterMark">A × M</div>
+      <h2>Para Maria</h2>
+      <p class="letter">Entre tantos universos, personagens e histórias que a gente gosta, a minha história favorita continua sendo a nossa. Cada lembrança que construímos faz eu querer descobrir o que ainda vem pela frente com você.</p>
+      <div class="backQuote">“Que este seja apenas mais um capítulo de muitos que ainda vamos viver juntos.”</div>
+      <p class="signature">Alexandre<br><b>9 meses ao seu lado, e contando...</b></p>
+    </div>
+  </div>
+</div>
+<div id="skillBurst" class="skillBurst">
+  <small>SKILL EXCLUSIVA ATIVADA</small>
+  <b>SEMPRE AO SEU LADO</b>
+  <span>Lv.∞</span>
+  <div class="burstStats">
+    <i><em>FELICIDADE</em><strong>SSS+</strong></i>
+    <i><em>CARINHO</em><strong>SSS+</strong></i>
+    <i><em>CONFIANÇA</em><strong>SSS+</strong></i>
+    <i><em>COMPANHEIRISMO</em><strong>SSS+</strong></i>
+    <i><em>SINCRONIA</em><strong>MÁX</strong></i>
+    <i><em>MEMÓRIAS</em><strong>S</strong></i>
+    <i><em>SORTE</em><strong>SSS+</strong></i>
+    <i><em>FUTURO</em><strong>∞</strong></i>
+  </div>
+  <p>BÔNUS DE DUPLA • ATIVAÇÃO TOTAL</p>
+</div>
+<p class="urMessage">Você encontrou todas as duplas, mas a dupla mais importante deste festival sempre foi a gente</p>
+<div class="completion">
+ <p class="eyebrow">TRACEN FESTIVAL • RESULT</p><h2>Classificação do Festival <b>S+</b></h2>
+ <div class="resultStats"><span>4/4<small>Casais</small></span><span>4/4<small>Memórias</small></span><span>1<small>Carta UR</small></span></div>
+ <div class="certificate"><small>ACADEMIA TRACEN SPECIAL FESTIVAL</small><h3>Certificado do Festival</h3><p>Trainer <b>Maria</b></p><p>Parceiro Especial <b>Alexandre</b></p><p>Aniversário de Namoro <b>9 Meses</b></p><strong>CLASSIFICAÇÃO DO FESTIVAL S+</strong></div>
+</div>
+</div>
+</section>
+</main>
+
+<div id="unlock" class="unlock">
+<div class="unlockBox"><p class="eyebrow">COLEÇÃO COMPLETA</p><div class="unlockRank">R <i>→</i> SR <i>→</i> SSR <i>→</i> <b>UR</b></div><h2>Todas as combinações foram encontradas… ou quase todas.</h2><p>Existe uma última carta esperando por vocês.</p><button id="openUR" class="primary">REVELAR CARTA UR</button><button id="closeUnlock" class="ghost">Ver depois</button></div>
+</div>
+<div id="matchBanner" class="matchBanner"></div>
+<audio id="music" src="sons/Musica da corrida.mp3" loop preload="auto"></audio>
+<script src="corrida.js"></script>
+</body></html>

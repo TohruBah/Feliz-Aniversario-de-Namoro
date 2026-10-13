@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="88" viewBox="0 0 96 88" shape-rendering="crispEdges">
+<g transform="translate(0 -1)">
+<!-- tail behind --> <path d="M31 51 L17 46 L10 52 L20 56 L32 54 Z" fill="#9b604f"/>
+<!-- back leg --> <rect x="43" y="59" width="8" height="15" fill="#ece8f6"/><rect x="38" y="70" width="17" height="7" fill="#ffffff"/>
+<!-- ears --> <path d="M43 17 L39 4 L48 13 Z" fill="#9b604f"/><path d="M61 15 L66 3 L69 17 Z" fill="#9b604f"/>
+
+<!-- hair/head side profile --> <rect x="39" y="14" width="31" height="28" fill="#9b604f"/><rect x="48" y="20" width="27" height="22" fill="#f2d6cb"/><rect x="42" y="14" width="23" height="9" fill="#9b604f"/><rect x="66" y="22" width="8" height="13" fill="#9b604f"/>
+<!-- eye/nose --> <rect x="65" y="27" width="4" height="5" fill="#8c70bb"/><rect x="75" y="34" width="3" height="3" fill="#f2d6cb"/>
+<!-- torso --> <rect x="38" y="41" width="27" height="22" fill="#ece8f6"/><rect x="39" y="42" width="26" height="5" fill="#ffffff"/><rect x="50" y="43" width="5" height="18" fill="#8c70bb"/>
+<!-- rear arm --> <rect x="34" y="44" width="8" height="9" fill="#ece8f6"/><rect x="31" y="49" width="14" height="7" fill="#f2d6cb"/>
+<!-- front arm --> <rect x="61" y="44" width="8" height="9" fill="#ece8f6"/><rect x="61" y="50" width="15" height="7" fill="#f2d6cb"/>
+<!-- front leg --> <rect x="54" y="59" width="8" height="15" fill="#ece8f6"/><rect x="59" y="70" width="18" height="7" fill="#ffffff"/>
+<!-- speed pixels --> <rect x="18" y="63" width="8" height="3" fill="#8c70bb" opacity=".8"/><rect x="9" y="68" width="12" height="3" fill="#ffffff" opacity=".65"/>
+</g></svg>

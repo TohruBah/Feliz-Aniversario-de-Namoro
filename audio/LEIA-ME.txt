@@ -1,0 +1,1 @@
+Para narração japonesa com interpretação de anime, gere 13 áudios com os textos de NARRACAO-JAPONESA.md. Salve como cena-01.mp3 até cena-13.mp3 nesta pasta. Se não houver MP3, o site tentará usar uma voz japonesa do dispositivo. As legendas continuam em português. Opcional: trilha.mp3 (música instrumental, respeitando a licença).

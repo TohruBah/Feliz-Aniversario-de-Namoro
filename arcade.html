@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090715"><title>Tracen Fliperama do Festival</title>
+<link rel="stylesheet" href="arcade.css">
+</head>
+<body>
+<header>
+<a href="corrida.html">← Festival</a>
+<div><small>ACADEMIA TRACEN • 9 MESES</small><b>Fliperama do Festival</b></div>
+<button id="sound">♪</button>
+</header>
+
+<main>
+<section id="hub" class="screen active">
+<div class="hero"><p>TRACEN FESTIVAL</p><h1>Arcade</h1><span>Seis atrações especiais do Festival. Escolha um jogo.</span></div>
+<div class="games">
+<button class="gameTile" data-open="power"><i>👑</i><b>Desafio de Força da Gentildonna</b><span>Acerte o centro da barra e prove sua força.</span></button>
+<button class="gameTile" data-open="silhouette"><i>❔</i><b>Adivinhe pela Silhueta</b><span>Reconheça a Uma Musume escondida.</span></button>
+<button class="gameTile" data-open="crane"><i>🕹️</i><b>Máquina de Garra Tracen</b><span>Pegue os chaveiros na máquina de garra.</span></button>
+<button class="gameTile" data-open="pairconnect"><i>🔗</i><b>Conecte os Casais Tracen</b><span>Encontre e conecte os quatro casais do Festival.</span></button>
+<button class="gameTile" data-open="ttt"><i>×○</i><b>Jogo da Velha</b><span>Escolha uma personagem e enfrente a CPU.</span></button>
+<button class="gameTile" data-open="maze"><i>☕</i><b>Labirinto da Manhattan Cafe</b><span>Encontre Cafe no escuro.</span></button>
+</div>
+<div class="records"><b>Passe do Fliperama</b><span id="arcadeProgress">0 / 6 atrações concluídas</span><div><i id="progressBar"></i></div></div>
+</section>
+
+<section id="power" class="screen gameScreen">
+<div class="gameTop"><button class="home">← Fliperama</button><div><small>ATRAÇÃO 01</small><h2>Desafio de Força da Gentildonna</h2></div><button id="powerReset">↻</button></div>
+<p class="instructions">A barra se move continuamente. Aperte <b>GOLPEAR</b> quando o marcador estiver o mais próximo possível do centro. São cinco tentativas.</p>
+<div class="powerArena">
+  <div class="gentildonnaStage"><img src="imagens/festival-casais/gentildonna.png" alt="Gentildonna"><div><small>GENTILDONNA</small><b id="powerReaction">Mostre-me a sua força.</b></div></div>
+  <div class="powerMachine">
+    <div class="powerLabels"><span>ERRO</span><span>BOM</span><span>ÓTIMO</span><strong>PERFEITO</strong><span>ÓTIMO</span><span>BOM</span><span>ERRO</span></div>
+    <div class="powerTrack"><i class="zone z1"></i><i class="zone z2"></i><i class="zone z3"></i><i class="zone perfect"></i><i class="zone z3 r"></i><i class="zone z2 r"></i><i class="zone z1 r"></i><b id="powerMarker"></b></div>
+  </div>
+  <button id="powerHit" class="primary powerHit">GOLPEAR</button>
+  <div class="powerStats"><span>Tentativa <b id="powerTry">1/5</b></span><span>Pontos <b id="powerScore">0</b></span><span>Melhor <b id="powerBest">—</b></span></div>
+  <div id="powerRounds" class="powerRounds"></div>
+  <p id="powerMsg" class="status"></p>
+</div>
+</section>
+
+<section id="silhouette" class="screen gameScreen">
+<div class="gameTop"><button class="home">← Fliperama</button><div><small>ATRAÇÃO 02</small><h2>Adivinhe pela Silhueta</h2></div><button id="silReset">↻</button></div>
+<div class="quizStats"><span>Rodada <b id="silRound">1/8</b></span><span>Acertos <b id="silScore">0</b></span></div>
+<div class="silStage"><img id="silImg" alt="silhueta"></div>
+<div id="silOptions" class="options"></div><p id="silMsg" class="status"></p>
+</section>
+
+<section id="crane" class="screen gameScreen">
+<div class="gameTop"><button class="home">← Fliperama</button><div><small>ATRAÇÃO 03</small><h2>Máquina de Garra Tracen</h2></div><button id="craneReset">↻</button></div>
+<p class="instructions">A garra se move sozinha. Aperte PEGAR quando ela estiver sobre um chaveiro.</p>
+<div class="craneHud"><span>Tentativas <b id="tries">10</b></span><span>Prêmios <b id="prizes">0/8</b></span></div>
+<div id="machine" class="machine"><div id="claw" class="claw"><i></i><b>Y</b></div><div id="prizeBin" class="prizeBin"></div></div>
+<button id="grab" class="primary">PEGAR</button><div id="collection" class="miniCollection"></div>
+</section>
+
+<section id="pairconnect" class="screen gameScreen">
+<div class="gameTop"><button class="home">← Fliperama</button><div><small>ATRAÇÃO 04</small><h2>Conecte os Casais Tracen</h2></div><button id="pairReset">↻</button></div>
+<p class="instructions">Toque em uma personagem e depois em sua parceira. Encontre os quatro casais com o menor número de erros possível.</p>
+<div class="pairHud"><span>Casais <b id="pairFound">0/4</b></span><span>Erros <b id="pairErrors">0</b></span><span>Tempo <b id="pairTime">00:00</b></span></div>
+<div id="pairBoard" class="pairBoard"></div>
+<div id="pairLegend" class="pairLegend">
+ <span>Rice Shower ↔ Mihono Bourbon</span><span>Meisho Doto ↔ TM Opera O</span>
+ <span>Agnes Tachyon ↔ Manhattan Cafe</span><span>Orfevre ↔ Gentildonna</span>
+</div>
+<p id="pairMsg" class="status">Escolha a primeira personagem.</p>
+</section>
+
+<section id="ttt" class="screen gameScreen">
+<div class="gameTop"><button class="home">← Fliperama</button><div><small>ATRAÇÃO 05</small><h2>Jogo da Velha — Uma Musume</h2></div><button id="tttReset">↻</button></div>
+<p class="instructions">Escolha sua personagem. A CPU escolherá outra para enfrentar você.</p>
+<div id="tttChars" class="charPicker"></div>
+<div id="versus" class="versus"></div><div id="tttBoard" class="tttBoard"></div><p id="tttMsg" class="status"></p>
+</section>
+
+<section id="maze" class="screen gameScreen">
+<div class="gameTop"><button class="home">← Fliperama</button><div><small>ATRAÇÃO 06</small><h2>Labirinto da Manhattan Cafe</h2></div><button id="mazeReset">↻</button></div>
+<p class="instructions">Você é a pequena luz. Encontre Manhattan Cafe. Use WASD, setas ou os controles.</p>
+<div class="mazeWrap"><canvas id="mazeCanvas" width="540" height="540"></canvas></div>
+<div class="mazeControls"><button data-move="up">▲</button><span><button data-move="left">◀</button><button data-move="down">▼</button><button data-move="right">▶</button></span></div>
+<p id="mazeMsg" class="status">A presença dela está em algum lugar...</p>
+</section>
+</main>
+<div id="toast"></div>
+<audio id="audio" src="sons/Musica da corrida.mp3" loop></audio>
+<script src="arcade.js"></script>
+</body></html>

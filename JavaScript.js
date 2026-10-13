@@ -2427,3 +2427,84 @@ document.addEventListener(
         passive: true
     }
 );
+
+(() => {
+  const botao = document.getElementById("btnNossoAmor");
+  const modal = document.getElementById("modalNossoAmor");
+  const fechar = document.getElementById("fecharNossoAmor");
+  const infinito = document.getElementById("infinitoCoracoes");
+
+  if (!botao || !modal || !fechar || !infinito) return;
+
+  const total = 100;
+  const coracoes = [];
+  let animacao = null;
+  let inicio = null;
+
+  const cores = ["#ff77b7", "#ffb3dd", "#d59aff", "#ff568e"];
+
+  for (let i = 0; i < total; i++) {
+    const coracao = document.createElement("span");
+    coracao.className = "coracao-infinito";
+    coracao.textContent = "♥";
+    coracao.style.color = cores[i % cores.length];
+
+    infinito.appendChild(coracao);
+    coracoes.push(coracao);
+  }
+
+  function animar(tempo) {
+    if (inicio === null) inicio = tempo;
+
+    const segundos = (tempo - inicio) / 1000;
+    const largura = infinito.clientWidth;
+    const altura = infinito.clientHeight;
+
+    const centroX = largura / 2;
+    const centroY = altura / 2;
+    const raioX = largura * 0.40;
+    const raioY = altura * 0.36;
+
+    coracoes.forEach((coracao, i) => {
+      const angulo =
+        (i / total) * Math.PI * 2 + segundos * 0.42;
+
+      const x = centroX + raioX * Math.sin(angulo);
+      const y = centroY + raioY * Math.sin(2 * angulo);
+
+      const brilho = 0.75 + Math.sin(segundos * 3 + i) * 0.25;
+
+      coracao.style.transform =
+        `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${brilho})`;
+    });
+
+    animacao = requestAnimationFrame(animar);
+  }
+
+  function abrir() {
+    modal.classList.add("ativo");
+    modal.setAttribute("aria-hidden", "false");
+    inicio = null;
+    animacao = requestAnimationFrame(animar);
+  }
+
+  function fecharModal() {
+    modal.classList.remove("ativo");
+    modal.setAttribute("aria-hidden", "true");
+    cancelAnimationFrame(animacao);
+    animacao = null;
+  }
+
+  botao.addEventListener("click", abrir);
+  fechar.addEventListener("click", fecharModal);
+
+  modal.addEventListener("click", (evento) => {
+    if (evento.target === modal) fecharModal();
+  });
+
+  document.addEventListener("keydown", (evento) => {
+    if (evento.key === "Escape" && modal.classList.contains("ativo")) {
+      fecharModal();
+    }
+  });
+})();
